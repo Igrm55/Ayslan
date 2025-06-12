@@ -74,32 +74,56 @@
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 1s ease-out, transform 1s ease-out;
+            will-change: opacity, transform;
         }
         .scroll-reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- ENTRANCE ANIMATION --- */
+        /* --- ENTRANCE ANIMATION (PERFORMANCE OPTIMIZED) --- */
         #entry-screen {
              transition: opacity 1.5s ease-in-out, backdrop-filter 1.5s ease-in-out;
         }
-        @keyframes pulse-glow {
-            0% { transform: scale(1); box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 0 50px rgba(251, 191, 36, 0.2); }
-            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(251, 191, 36, 0.6), 0 0 100px rgba(251, 191, 36, 0.4); }
-            100% { transform: scale(1); box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 0 50px rgba(251, 191, 36, 0.2); }
-        }
+
         #open-surprise-btn {
+            position: relative;
             border: 2px solid #FBBF24;
             color: #FDE68A;
             background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.2) 0%, rgba(10,10,10,0) 70%);
-            animation: pulse-glow 3s infinite ease-in-out;
             transition: all 0.3s ease;
+            will-change: transform;
+            z-index: 1;
         }
+
+        #open-surprise-btn::after {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border-radius: 9999px;
+            background: transparent;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.6), 0 0 60px rgba(251, 191, 36, 0.4);
+            animation: pulse-effect 3s infinite ease-in-out;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            opacity: 0.7;
+            will-change: transform, opacity;
+        }
+
+        @keyframes pulse-effect {
+          0% { transform: scale(0.95); opacity: 0.7; }
+          50% { transform: scale(1.05); opacity: 1; }
+          100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
         #open-surprise-btn:hover {
-            transform: scale(1.1) !important; /* !important to override animation */
+            transform: scale(1.1);
             background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.4) 0%, rgba(10,10,10,0) 70%);
             color: #fff;
+        }
+        
+        #open-surprise-btn:hover::after {
+            opacity: 1;
         }
 
         /* --- PHOTO CAROUSEL --- */
@@ -135,7 +159,7 @@
 
         /* --- MEMORY GAME --- */
         .memory-card { perspective: 1000px; }
-        .memory-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+        .memory-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; will-change: transform; }
         .memory-card.is-flipped .memory-card-inner { transform: rotateY(180deg); }
         .card-face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; }
         .card-front { background-image: linear-gradient(135deg, #FDE68A, #F59E0B); color: #2D3748; box-shadow: inset 0 0 10px rgba(0,0,0,0.3); }
@@ -145,7 +169,7 @@
         /* --- MODAL --- */
         .modal-overlay { display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 50; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-content { background: #111827; border: 2px solid #FBBF24; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.3); text-align: center; max-width: 90%; width: 400px; transform: scale(0.95); transition: transform 0.3s ease; }
+        .modal-content { background: #111827; border: 2px solid #FBBF24; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.3); text-align: center; max-width: 90%; width: 400px; transform: scale(0.95); transition: transform 0.3s ease; will-change: transform; }
         .modal-overlay.active .modal-content { transform: scale(1); }
         
         /* --- PROPOSAL & GENERIC BUTTONS --- */
@@ -153,6 +177,7 @@
             border: 2px solid #FBBF24; color: #FBBF24; background-color: transparent; font-weight: 700; padding: 0.75rem 2rem; border-radius: 9999px;
             transition: all 0.3s ease; transform-origin: center;
             box-shadow: 0 0 10px rgba(251, 191, 36, 0.2), inset 0 0 10px rgba(251, 191, 36, 0.1);
+            will-change: transform, box-shadow, background-color, color;
         }
         .glowing-btn:hover {
             background-color: #FBBF24; color: #0A0A0A; transform: scale(1.05);
@@ -162,8 +187,8 @@
         /* --- FINAL SCREEN --- */
         #finale-canvas { position: fixed; top: 0; left: 0; z-index: 80; pointer-events: none; }
         #finale-overlay { z-index: 70; }
-        #parchment-svg { height: 0; overflow: hidden; transition: height 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s, width 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s; max-width: 90vw; max-height: 90vh; }
-        #close-finale-btn { position: absolute; top: 1rem; right: 1rem; color: #586e75; background: rgba(0,0,0,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 90; transition: color 0.3s, background 0.3s, transform 0.3s; opacity: 0; pointer-events: none;}
+        #parchment-svg { height: 0; overflow: hidden; transition: height 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s, width 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s; max-width: 90vw; max-height: 90vh; will-change: width, height; }
+        #close-finale-btn { position: absolute; top: 1rem; right: 1rem; color: #586e75; background: rgba(0,0,0,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 90; transition: color 0.3s, background 0.3s, transform 0.3s, opacity 0.3s; opacity: 0; pointer-events: none;}
         #close-finale-btn:hover { color: #c0392b; background: rgba(0,0,0,0.2); transform: scale(1.1); }
         #finale-overlay.active #close-finale-btn { opacity: 1; pointer-events: all; transition-delay: 2.5s; }
 
@@ -366,6 +391,21 @@
             feather.replace();
 
             const imageSources = ['https://i.postimg.cc/SQfPD9M0/b9e72434-91f4-48a8-bfe9-880fc110c4b1.jpg', 'https://i.postimg.cc/5NPRMMgn/36755635-30f5-4ad4-b7b9-ce6b93e93990.jpg', 'https://i.postimg.cc/WbpHK4Gd/24462ad1-ac80-4795-b49e-9798390589d1.jpg', 'https://i.postimg.cc/dVLSsSSv/3b4d2e77-3815-4fdd-b21b-04ebd3a97bec.jpg', 'https://i.postimg.cc/85BZX8sd/2418fd8d-d268-4bc4-854e-7003361a44b8.jpg', 'https://i.postimg.cc/MGBPRfSF/58ffa755-5a11-489b-a498-e10e5a819b85.jpg', 'https://i.postimg.cc/SspZGQQN/9218cd6a-1df4-46d3-8be8-9dd85b3a7ce5.jpg', 'https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg', 'https://i.postimg.cc/66cHdNkt/c5a43a50-32f9-4024-a03a-254f518ca858.jpg', 'https://i.postimg.cc/brm38Qxs/6219e37f-a6d8-489e-b3c4-e6f83fded76e.jpg', 'https://i.postimg.cc/9FfLbn2T/26958c37-f10d-4b1e-a001-f2d90c035734.jpg', 'https://i.postimg.cc/GhSq5x3f/9d2d6e91-e2a3-4f84-b6e9-91fd7f7fa2ea.jpg', 'https://i.postimg.cc/0yTZ85wd/180047be-01e2-4542-8dec-44978622ea1d.jpg'];
+            const isMobile = window.innerWidth < 768;
+
+            // --- Performance Utilities ---
+            function throttle(func, limit) {
+                let inThrottle;
+                return function() {
+                    const args = arguments;
+                    const context = this;
+                    if (!inThrottle) {
+                        func.apply(context, args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
+                    }
+                };
+            }
 
             // --- Background Starfield ---
             const bgCanvas = document.getElementById('background-canvas');
@@ -376,7 +416,7 @@
                 bgCanvas.width = window.innerWidth;
                 bgCanvas.height = window.innerHeight;
                 stars = [];
-                const starCount = window.innerWidth > 768 ? 200 : 100;
+                const starCount = isMobile ? 80 : 200;
                 for (let i = 0; i < starCount; i++) {
                     stars.push({
                         x: Math.random() * bgCanvas.width,
@@ -405,9 +445,6 @@
                 });
                 requestAnimationFrame(animateStars);
             }
-            
-            window.addEventListener('resize', setupStars);
-
 
             // --- General Modal Logic ---
             const notificationModal = document.getElementById('notification-modal');
@@ -430,8 +467,7 @@
 
             const scrollElements = document.querySelectorAll('.scroll-reveal');
             const handleScrollReveal = () => scrollElements.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible'); });
-            window.addEventListener('scroll', handleScrollReveal);
-
+            
             // --- Generic Audio Player Setup ---
             function setupAudioPlayer(config) {
                 const audio = document.getElementById(config.audioId);
@@ -525,9 +561,18 @@
             
             document.getElementById('next-btn').addEventListener('click', () => changeImage(1));
             document.getElementById('prev-btn').addEventListener('click', () => changeImage(-1));
-            window.addEventListener('resize', () => setContainerSize(currentImageIndex));
-            preloadImagesAndBuildCarousel();
+            
+            // --- Throttled Event Listeners ---
+            const throttledScroll = throttle(handleScrollReveal, 100);
+            const throttledResize = throttle(() => {
+                setupStars();
+                setContainerSize(currentImageIndex);
+            }, 250);
 
+            window.addEventListener('scroll', throttledScroll);
+            window.addEventListener('resize', throttledResize);
+            
+            preloadImagesAndBuildCarousel();
 
             // --- Memory Game ---
             const gameBoard = document.getElementById('game-board');
@@ -645,7 +690,7 @@
                 }
             };
             function createConfetti() {
-                let count = 15;
+                let count = isMobile ? 8 : 15;
                 while(count--) particles.push(new Confetti());
             }
             
@@ -699,7 +744,7 @@
             };
             
             function createSparks(x, y) {
-                let sparkCount = 100;
+                let sparkCount = isMobile ? 50 : 100;
                 while (sparkCount--) particles.push(new Spark(x, y));
             }
             
