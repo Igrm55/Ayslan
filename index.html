@@ -640,12 +640,14 @@
                 }, 150);
 
                 animateParticles();
-
+                
+                // Stop spawning confetti/fireworks after 3 seconds
                 setTimeout(() => {
                     stopSpawning = true;
                     clearInterval(spawnInterval);
-                }, 5000);
+                }, 3000); // Animation duration set to 3 seconds
 
+                // Hide the overlay and stop the animation loop after 6 seconds total
                 setTimeout(() => {
                     finaleOverlay.classList.remove('active');
                      setTimeout(() => {
@@ -653,7 +655,7 @@
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
                         particles = [];
                     }, 500);
-                }, 8000);
+                }, 6000);
             }
 
             proposalBtns.forEach(btn => btn.addEventListener('click', handleFinale));
