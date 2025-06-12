@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uma Surpresa Especial para Jeferson</title>
+    <title>Uma Surpresa para Jeferson</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,184 +11,137 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
     
-    <!-- Feather Icons for cleaner icons -->
+    <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
 
     <!-- Custom Styles -->
     <style>
-        /* Base styles with a more refined palette */
+        :root {
+            --primary-glow: #00BFFF; /* DeepSkyBlue */
+            --secondary-glow: #1E90FF; /* DodgerBlue */
+            --background-dark: #0A0F1F; /* Um azul quase preto */
+            --text-primary: #E0E6F1;
+            --text-secondary: #A8B2C3;
+            --card-bg: rgba(16, 24, 48, 0.7);
+            --border-color: rgba(0, 191, 255, 0.2);
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0A0A0A; /* Near black for a sophisticated feel */
-            color: #E5E7EB; /* Gray-200 for soft text */
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
         }
 
-        /* A more elegant handwriting font for headings */
-        .font-handwriting {
-            font-family: 'Playfair Display', serif;
-            font-weight: 700;
-        }
+        .font-heading { font-weight: 700; }
+        .font-signature { font-family: 'Great Vibes', cursive; }
 
-        .font-signature {
-             font-family: 'Great Vibes', cursive;
-        }
-
-        /* Background Starfield */
         #background-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.6;
         }
 
-        /* Card with a subtle paper texture and gradient border */
-        .card-texture {
-            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
-            background-color: #fdf6e3; /* A warmer, more paper-like color */
-            color: #2a2a2a; /* Darker text for better contrast */
-            border: 2px solid;
-            border-image-slice: 1;
-            border-image-source: linear-gradient(to bottom right, #FBBF24, #DAA520);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(251, 191, 36, 0.2);
-        }
-
-        /* Glowing text effect for special titles */
         @keyframes dynamic-glow {
-            0%, 100% { text-shadow: 0 0 5px #FCD34D, 0 0 10px #FCD34D, 0 0 20px #FBBF24, 0 0 30px #F59E0B; }
-            50% { text-shadow: 0 0 10px #FDE68A, 0 0 20px #FDE68A, 0 0 30px #FCD34D, 0 0 40px #FBBF24; }
+            0%, 100% { text-shadow: 0 0 6px var(--primary-glow), 0 0 12px var(--primary-glow), 0 0 24px var(--secondary-glow); }
+            50% { text-shadow: 0 0 12px var(--secondary-glow), 0 0 24px var(--secondary-glow), 0 0 36px var(--primary-glow); }
         }
-        .text-glow {
-            animation: dynamic-glow 3s ease-in-out infinite;
-            color: #FDE68A; /* Lighter Amber for more pop */
-        }
+        .text-glow { animation: dynamic-glow 4s ease-in-out infinite; }
 
-        /* Section Reveal Animation */
         .scroll-reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            will-change: opacity, transform;
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        .scroll-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- ENTRANCE ANIMATION (PERFORMANCE OPTIMIZED) --- */
-        #entry-screen {
-             transition: opacity 1.5s ease-in-out, backdrop-filter 1.5s ease-in-out;
-        }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
 
         #open-surprise-btn {
-            position: relative;
-            border: 2px solid #FBBF24;
-            color: #FDE68A;
-            background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.2) 0%, rgba(10,10,10,0) 70%);
+            border: 2px solid var(--primary-glow);
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.5), inset 0 0 10px rgba(0, 191, 255, 0.3);
             transition: all 0.3s ease;
-            will-change: transform;
-            z-index: 1;
         }
-
-        #open-surprise-btn::after {
-            content: '';
-            position: absolute;
-            top: -4px; left: -4px; right: -4px; bottom: -4px;
-            border-radius: 9999px;
-            background: transparent;
-            box-shadow: 0 0 35px rgba(251, 191, 36, 0.6), 0 0 60px rgba(251, 191, 36, 0.4);
-            animation: pulse-effect 3s infinite ease-in-out;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-            opacity: 0.7;
-            will-change: transform, opacity;
-        }
-
-        @keyframes pulse-effect {
-          0% { transform: scale(0.95); opacity: 0.7; }
-          50% { transform: scale(1.05); opacity: 1; }
-          100% { transform: scale(0.95); opacity: 0.7; }
-        }
-
         #open-surprise-btn:hover {
-            transform: scale(1.1);
-            background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.4) 0%, rgba(10,10,10,0) 70%);
-            color: #fff;
+            transform: scale(1.1); background-color: var(--primary-glow);
+            border-color: white; box-shadow: 0 0 35px rgba(0, 191, 255, 0.8);
         }
         
-        #open-surprise-btn:hover::after {
-            opacity: 1;
+        .glass-card {
+            background: var(--card-bg); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border-color);
+            border-radius: 1rem; transition: all 0.4s ease;
         }
-
-        /* --- PHOTO CAROUSEL --- */
-        #carousel-container {
-            position: relative;
-            transition: height 0.4s ease-in-out, width 0.4s ease-in-out;
-            margin: auto; 
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
-            border-radius: 0.75rem;
+        .glass-card:hover {
+            border-color: rgba(0, 191, 255, 0.5); transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .carousel-container {
+            position: relative; width: 100%; aspect-ratio: 4 / 3;
+            margin: auto; border-radius: 0.75rem; overflow: hidden;
         }
         .carousel-item {
             position: absolute; inset: 0; opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease-in-out; transform: scale(1.05);
         }
-        .carousel-item.active { opacity: 1; }
-        .carousel-item-img {
-            width: 100%; height: 100%; object-fit: contain; display: block;
-            border-radius: 0.75rem; 
+        .carousel-item.active { opacity: 1; transform: scale(1); z-index: 1; }
+        .carousel-item img { width: 100%; height: 100%; object-fit: contain; display: block; }
+        .carousel-nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.4); color: white; border-radius: 50%;
+            width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+            z-index: 10; transition: all 0.2s ease;
         }
-        #carousel-blink-overlay {
-            position: absolute; inset: 0; background-color: #0A0A0A;
-            z-index: 10; opacity: 0; pointer-events: none;
-            transition: opacity 0.15s ease-in-out; border-radius: 0.5rem;
-        }
-
-        /* --- CUSTOM AUDIO PLAYER --- */
-        .audio-player-container { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 1rem; padding: 1.5rem; max-width: 600px; margin: auto; box-shadow: 0 0 20px rgba(251, 191, 36, 0.1); }
-        .seek-bar-container { background: rgba(0, 0, 0, 0.5); height: 6px; border-radius: 3px; cursor: pointer; }
-        .seek-bar-progress { background: #FBBF24; height: 100%; border-radius: 3px; box-shadow: 0 0 5px #FBBF24; }
-        .seek-bar-thumb { width: 16px; height: 16px; background: white; border-radius: 50%; position: absolute; top: 50%; transform: translateY(-50%) scale(0); transition: transform 0.2s; }
-        .seek-bar-container:hover .seek-bar-thumb { transform: translateY(-50%) scale(1); }
-
-        /* --- MEMORY GAME --- */
-        .memory-card { perspective: 1000px; }
-        .memory-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; will-change: transform; }
-        .memory-card.is-flipped .memory-card-inner { transform: rotateY(180deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; }
-        .card-front { background-image: linear-gradient(135deg, #FDE68A, #F59E0B); color: #2D3748; box-shadow: inset 0 0 10px rgba(0,0,0,0.3); }
-        .card-back { background-color: #1a202c; transform: rotateY(180deg); padding: 0.25rem; }
-        .card-back img { max-width: 100%; max-height: 100%; object-fit: cover; border-radius: 0.375rem; }
-
-        /* --- MODAL --- */
-        .modal-overlay { display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 50; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-content { background: #111827; border: 2px solid #FBBF24; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.3); text-align: center; max-width: 90%; width: 400px; transform: scale(0.95); transition: transform 0.3s ease; will-change: transform; }
-        .modal-overlay.active .modal-content { transform: scale(1); }
+        .carousel-nav-btn:hover { background-color: var(--primary-glow); transform: translateY(-50%) scale(1.1); }
         
-        /* --- PROPOSAL & GENERIC BUTTONS --- */
+        .thank-you-shape {
+            aspect-ratio: 1 / 1; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(145deg, var(--primary-glow), var(--secondary-glow));
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        .thank-you-shape:hover { transform: scale(1.15) rotate(15deg); box-shadow: 0 0 25px var(--primary-glow); }
+        
         .glowing-btn {
-            border: 2px solid #FBBF24; color: #FBBF24; background-color: transparent; font-weight: 700; padding: 0.75rem 2rem; border-radius: 9999px;
-            transition: all 0.3s ease; transform-origin: center;
-            box-shadow: 0 0 10px rgba(251, 191, 36, 0.2), inset 0 0 10px rgba(251, 191, 36, 0.1);
-            will-change: transform, box-shadow, background-color, color;
+            border: 2px solid var(--primary-glow); color: var(--primary-glow); background-color: transparent;
+            font-weight: 600; padding: 0.75rem 2rem; border-radius: 9999px;
+            transition: all 0.3s ease;
         }
         .glowing-btn:hover {
-            background-color: #FBBF24; color: #0A0A0A; transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(251, 191, 36, 0.5), 0 0 50px rgba(251, 191, 36, 0.2);
+            background-color: var(--primary-glow); color: var(--background-dark);
+            box-shadow: 0 0 25px var(--primary-glow); transform: scale(1.05);
         }
+        
+        .memory-card { perspective: 1000px; }
+        .memory-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s; transform-style: preserve-3d; }
+        .memory-card.is-flipped .memory-card-inner { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; }
+        .card-front { background: linear-gradient(135deg, var(--secondary-glow), var(--primary-glow)); }
+        .card-back { background-color: #1a2941; transform: rotateY(180deg); padding: 0.25rem; }
+        .card-back img { max-width: 100%; max-height: 100%; object-fit: cover; border-radius: 0.375rem; }
 
-        /* --- FINAL SCREEN --- */
-        #finale-canvas { position: fixed; top: 0; left: 0; z-index: 80; pointer-events: none; }
-        #finale-overlay { z-index: 70; }
+        .audio-player-container {
+            max-width: 600px; margin: auto;
+        }
+        .seek-bar-container { background: rgba(0, 0, 0, 0.5); height: 6px; border-radius: 3px; cursor: pointer; }
+        .seek-bar-progress { background: var(--primary-glow); height: 100%; border-radius: 3px; box-shadow: 0 0 5px var(--primary-glow); }
+        .seek-bar-thumb { width: 16px; height: 16px; background: white; border-radius: 50%; position: absolute; top: 50%; transform: translateY(-50%) scale(0); transition: transform 0.2s; }
+        .seek-bar-container:hover .seek-bar-thumb { transform: translateY(-50%) scale(1); }
+        
+        .modal-overlay {
+            position: fixed; inset: 0; background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px); z-index: 50; display: none; align-items: center;
+            justify-content: center; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { transform: scale(0.9); transition: transform 0.3s ease; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        
+        #finale-canvas { position: fixed; top: 0; left: 0; z-index: 110; pointer-events: none; display: none; }
+        #finale-overlay { z-index: 100; }
+        #finale-overlay .parchment-texture { background-color: #fdf6e3; color: #2a2a2a; }
         #parchment-svg { height: 0; overflow: hidden; transition: height 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s, width 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s; max-width: 90vw; max-height: 90vh; will-change: width, height; }
-        #close-finale-btn { position: absolute; top: 1rem; right: 1rem; color: #586e75; background: rgba(0,0,0,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 90; transition: color 0.3s, background 0.3s, transform 0.3s, opacity 0.3s; opacity: 0; pointer-events: none;}
+        #close-finale-btn { position: absolute; top: 1rem; right: 1rem; color: #586e75; background: rgba(0,0,0,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 90; transition: all 0.3s; opacity: 0; pointer-events: none;}
         #close-finale-btn:hover { color: #c0392b; background: rgba(0,0,0,0.2); transform: scale(1.1); }
         #finale-overlay.active #close-finale-btn { opacity: 1; pointer-events: all; transition-delay: 2.5s; }
 
@@ -198,58 +151,74 @@
 
     <canvas id="background-canvas"></canvas>
 
-    <!-- Entry Screen -->
-    <div id="entry-screen" class="fixed inset-0 bg-[#0A0A0A] z-[100] flex flex-col items-center justify-center transition-opacity duration-1000 p-4">
-        <h1 class="font-handwriting text-5xl md:text-7xl text-amber-300 drop-shadow-lg mb-6 text-center text-glow">Um Presente Especial...</h1>
-        <p class="text-slate-300 text-lg md:text-xl mb-12 text-center">Feito com o coração, para você.</p>
-        <button id="open-surprise-btn" class="w-48 h-48 rounded-full text-xl flex items-center justify-center flex-col">
+    <!-- Tela de Entrada -->
+    <div id="entry-screen" class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center p-4 transition-opacity duration-1000">
+        <h1 class="font-heading text-5xl md:text-6xl text-center text-glow mb-4">Um Presente Especial</h1>
+        <p class="text-lg md:text-xl text-center text-slate-300 mb-10">Feito de coração, para você.</p>
+        <button id="open-surprise-btn" class="w-40 h-40 rounded-full text-lg flex items-center justify-center flex-col text-white">
             <i data-feather="gift" class="w-16 h-16 mb-2"></i>
             Abrir
         </button>
     </div>
 
-    <!-- Main Content -->
+    <!-- Conteúdo Principal -->
     <div id="main-content" class="opacity-0 transition-opacity duration-1000 relative z-10">
-        <!-- Header -->
-        <header class="text-center py-20 md:py-32 px-6 relative bg-cover bg-center lg:bg-fixed" style="background-image: linear-gradient(to top, #0A0A0A 5%, rgba(10, 10, 10, 0.7)), url('https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg');">
-            <div class="absolute inset-0 bg-black/40"></div>
+        <header class="text-center py-24 md:py-32 px-4 relative bg-cover bg-center" style="background-image: linear-gradient(to top, var(--background-dark) 20%, transparent), url('https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg');">
+            <div class="absolute inset-0 bg-black/60"></div>
             <div class="relative z-10">
-                <h1 class="font-handwriting text-5xl md:text-7xl lg:text-8xl text-glow drop-shadow-lg scroll-reveal">Para Jeferson, Meu Melhor Amigo</h1>
-                <p class="mt-4 text-lg md:text-xl text-slate-200 scroll-reveal" style="transition-delay: 200ms;">Uma celebração da nossa amizade.</p>
+                <h1 class="font-heading text-4xl sm:text-5xl md:text-7xl text-glow drop-shadow-lg scroll-reveal">Para Jeferson, Meu Melhor Amigo</h1>
+                <p class="mt-4 text-md md:text-lg text-slate-200 scroll-reveal" style="transition-delay: 150ms;">Uma celebração da nossa amizade.</p>
             </div>
         </header>
 
-        <main class="container mx-auto px-4 py-12 space-y-24 md:space-y-32">
+        <main class="container mx-auto px-4 py-12 space-y-20 md:space-y-28">
 
-            <!-- Letter Section -->
-            <section class="flex justify-center scroll-reveal">
-                <div class="card-texture p-8 md:p-12 rounded-lg max-w-4xl transform hover:scale-[1.02] transition-transform duration-500">
-                    <h2 class="font-handwriting text-4xl text-amber-900 mb-6 border-b-2 border-amber-800/20 pb-2">Uma Carta do Coração...</h2>
-                    <div class="text-lg space-y-4 leading-relaxed font-light">
-                        <p>Jeferson, meu melhor amigo,</p>
-                        <p>Hoje me peguei pensando em tudo o que a nossa amizade significa pra mim, e senti uma vontade enorme de te escrever essas palavras, do fundo do coração.</p>
-                        <p>Você é o meu melhor amigo. Simples assim, mas com um peso gigantesco. E não é só porque a gente se entende, ri junto, ou compartilha histórias… é porque a sua presença na minha vida é uma das coisas mais preciosas que eu tenho.</p>
-                        <p>Sou imensamente feliz por termos nos reaproximado lá no Bradesco. Às vezes a vida dá esses giros inesperados, e naquele momento em que tudo parecia tão automático, rotineiro, foi você quem trouxe de volta a leveza, a risada fácil, o sentimento de estar com alguém que realmente importa. A nossa amizade ganhou um novo fôlego ali — e eu agradeço por isso todos os dias.</p>
-                        <p>Mesmo morando tão longe, lá em Oz, onde parece que tudo é mais distante e fora de alcance… nossa amizade continua firme, forte, inabalável. A distância, ao invés de nos afastar, só serviu pra mostrar o quanto a gente se importa um com o outro. Cada mensagem, cada ligação, cada reencontro — tudo ganha ainda mais valor.</p>
-                        <p>Sou muito feliz com nossa amizade com tudo o que ela representa. Sei que a vida ainda vai mudar muito, nos levar por caminhos inesperados, mas de uma coisa eu tenho certeza: seremos melhores amigos até a eternidade. Nada pode mudar isso.</p>
-                        <p>Obrigado por ser quem você é. Obrigado por estar na minha vida.</p>
-                        <p class="text-right font-signature text-5xl mt-8 text-amber-900/90">Do seu melhor amigo<br>Ayslan</p>
+            <section class="scroll-reveal">
+                <h2 class="font-heading text-3xl md:text-4xl text-center text-glow mb-2">A Contagem da Nossa Amizade</h2>
+                <p class="text-center text-slate-400 mb-8">O tempo desde que nos reencontramos no meu aniversário.</p>
+                <div class="glass-card p-6 max-w-2xl mx-auto">
+                    <div id="friendship-timer" class="flex flex-wrap justify-center gap-4 text-center">
+                        <div class="min-w-[80px] bg-black/20 p-4 rounded-lg"><span id="days" class="block font-bold text-4xl text-white">0</span><span class="text-xs text-slate-400">Dias</span></div>
+                        <div class="min-w-[80px] bg-black/20 p-4 rounded-lg"><span id="hours" class="block font-bold text-4xl text-white">0</span><span class="text-xs text-slate-400">Horas</span></div>
+                        <div class="min-w-[80px] bg-black/20 p-4 rounded-lg"><span id="minutes" class="block font-bold text-4xl text-white">0</span><span class="text-xs text-slate-400">Minutos</span></div>
+                        <div class="min-w-[80px] bg-black/20 p-4 rounded-lg"><span id="seconds" class="block font-bold text-4xl text-white">0</span><span class="text-xs text-slate-400">Segundos</span></div>
                     </div>
                 </div>
             </section>
             
-            <!-- Author's Song Section -->
+            <section class="scroll-reveal">
+                <h2 class="font-heading text-3xl md:text-4xl text-center text-glow mb-2">Agradecimentos</h2>
+                <p class="text-center text-slate-400 mb-8">Doze motivos, de infinitos, pelos quais sou grato por nossa amizade.</p>
+                <div id="thank-you-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 md:gap-8 max-w-3xl mx-auto"></div>
+            </section>
+
+            <section class="flex justify-center scroll-reveal">
+                <div class="glass-card p-8 md:p-10 max-w-4xl">
+                    <h2 class="font-heading text-3xl text-white mb-6 border-b-2 border-blue-500/30 pb-3">Uma Carta Direto do Coração</h2>
+                    <div class="text-base sm:text-lg space-y-5 leading-relaxed text-slate-300">
+                        <p>Jeferson, meu melhor amigo,</p>
+                        <p>Hoje me peguei pensando em tudo o que a nossa amizade significa pra mim, e senti uma vontade enorme de te escrever essas palavras, do fundo do coração...</p>
+                        <p>Você é o meu melhor amigo. Simples assim, mas com um peso gigantesco... é porque a sua presença na minha vida é uma das coisas mais preciosas que eu tenho.</p>
+                        <p>Sou imensamente feliz por termos nos reaproximado... A nossa amizade ganhou um novo fôlego ali — e eu agradeço por isso todos os dias.</p>
+                        <p>Mesmo morando tão longe... nossa amizade continua firme, forte, inabalável. A distância, ao invés de nos afastar, só serviu pra mostrar o quanto a gente se importa um com o outro.</p>
+                        <p>Sei que a vida ainda vai mudar muito, nos levar por caminhos inesperados, mas de uma coisa eu tenho certeza: seremos melhores amigos até a eternidade. Nada pode mudar isso.</p>
+                        <p>Obrigado por ser quem você é. Obrigado por estar na minha vida.</p>
+                        <p class="text-right font-signature text-5xl mt-8 text-blue-300/90">- Ayslan</p>
+                    </div>
+                </div>
+            </section>
+            
             <section class="scroll-reveal text-center">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Uma Canção Especial</h2>
-                <p class="text-slate-400 mb-8 max-w-2xl mx-auto">Uma canção que fiz exclusivamente, contando um pouco da história da nossa amizade.</p>
-                <div class="audio-player-container">
+                <h2 class="font-heading text-3xl md:text-4xl text-center text-glow mb-2">Uma Canção Exclusiva</h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto">Uma canção que fiz, capturando a energia da nossa amizade.</p>
+                <div class="audio-player-container glass-card p-6">
                     <div class="flex items-center space-x-4">
-                        <button id="authors-song-play-pause" class="flex-shrink-0 w-14 h-14 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-amber-300 shadow-lg shadow-amber-500/20">
+                        <button id="authors-song-play-pause" class="flex-shrink-0 w-14 h-14 bg-blue-500 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-blue-400 shadow-lg shadow-blue-500/20">
                             <i data-feather="play" class="ml-1 w-7 h-7"></i>
                         </button>
-                        <div class="flex-grow">
-                            <div class="text-left text-white font-medium text-lg">Daqui Até a Eternidade</div>
-                            <div class="text-left text-sm text-slate-400">Ayslan</div>
+                        <div class="flex-grow text-left">
+                            <div class="text-white font-medium text-lg">Para Onde Mais Iremos</div>
+                            <div class="text-sm text-slate-400">Ayslan feat. Renata</div>
                         </div>
                     </div>
                      <div class="mt-4 flex items-center space-x-3">
@@ -261,48 +230,39 @@
                         <span id="authors-song-time-duration" class="text-xs text-slate-400 w-12 text-center">0:00</span>
                     </div>
                 </div>
-                <audio id="authors-song-audio" class="hidden" src="https://raw.githubusercontent.com/igrm55/aynslan_music/main/Daqui-Ate%CC%81-a-Eternidade-.mp3"></audio>
+                <audio id="authors-song-audio" class="hidden" src="https://github.com/igrm55/Para-onde-iremos/raw/main/Para%20Onde%20Iremos%20(feat.%20Renata%20Corr%C3%AAa).mp3"></audio>
             </section>
 
-            <!-- Photo Carousel Section -->
             <section class="scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Nossas Memórias</h2>
-                <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">Cada foto, uma página da nossa história. Momentos que guardo com carinho no coração.</p>
-                <div id="carousel-wrapper" class="max-w-5xl mx-auto relative">
-                    <div id="carousel-container">
-                        <!-- Images dynamically inserted here -->
+                <h2 class="font-heading text-3xl md:text-4xl text-center text-glow mb-2">Galeria de Momentos</h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">Alguns registros das histórias que construímos juntos.</p>
+                <div class="max-w-3xl mx-auto relative">
+                    <div class="carousel-container glass-card bg-black/20">
+                        <div id="carousel-inner"></div>
                     </div>
-                    <div id="carousel-blink-overlay"></div>
-                    <!-- Navigation Buttons -->
-                    <button id="prev-btn" class="absolute top-1/2 left-0 md:-left-16 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white z-20 transition-all duration-300 hover:scale-110">
-                        <i data-feather="chevron-left"></i>
-                    </button>
-                    <button id="next-btn" class="absolute top-1/2 right-0 md:-right-16 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white z-20 transition-all duration-300 hover:scale-110">
-                        <i data-feather="chevron-right"></i>
-                    </button>
+                    <button id="prev-btn" class="carousel-nav-btn left-2 md:-left-5"><i data-feather="chevron-left"></i></button>
+                    <button id="next-btn" class="carousel-nav-btn right-2 md:-right-5"><i data-feather="chevron-right"></i></button>
                 </div>
             </section>
             
-            <!-- Spotify Songs Section -->
             <section id="songs" class="scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Algumas de suas canções favoritas</h2>
+                <h2 class="font-heading text-3xl md:text-4xl text-center text-glow mb-2">Suas Canções Preferidas</h2>
                  <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">A trilha sonora que embala os seus dias. Espero que goste da seleção!</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0j2sui6BmkPy974W3VG3RZ?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0Xs01h2rSnY0iAgRdgMskv?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6OpFBCGJ282fCG15Ewb5Ob?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5wBzp92NzcwfeunyqeRODo?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7jOmWXi3Ut4Ualn7ubBUMV?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="md:col-span-2 lg:col-span-1 lg:col-start-2"></iframe>
+                    <iframe class="rounded-xl" src="https://open.spotify.com/embed/track/0j2sui6BmkPy974W3VG3RZ?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <iframe class="rounded-xl" src="https://open.spotify.com/embed/track/0Xs01h2rSnY0iAgRdgMskv?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <iframe class="rounded-xl" src="https://open.spotify.com/embed/track/6OpFBCGJ282fCG15Ewb5Ob?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <iframe class="rounded-xl" src="https://open.spotify.com/embed/track/5wBzp92NzcwfeunyqeRODo?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <iframe class="rounded-xl md:col-span-2 lg:col-span-1 lg:col-start-2" src="https://open.spotify.com/embed/track/7jOmWXi3Ut4Ualn7ubBUMV?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
             </section>
             
-            <!-- Special Audio Message Section -->
             <section class="text-center scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Uma Mensagem Especial Para Você</h2>
+                <h2 class="font-heading text-3xl md:text-4xl text-center text-glow mb-2">Uma Mensagem Especial Para Você</h2>
                 <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">Aperte o play para ouvir um recado que gravei. É algo que queria te dizer há tempos.</p>
-                <div class="audio-player-container">
+                <div class="audio-player-container glass-card p-6">
                     <div id="custom-audio-player" class="w-full flex items-center space-x-4">
-                        <button id="special-audio-play-pause" class="flex-shrink-0 w-14 h-14 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-amber-300 shadow-lg shadow-amber-500/20">
+                        <button id="special-audio-play-pause" class="flex-shrink-0 w-14 h-14 bg-blue-500 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-blue-400 shadow-lg shadow-blue-500/20">
                            <i data-feather="play" class="ml-1 w-7 h-7"></i>
                         </button>
                         <div class="w-full flex items-center space-x-3">
@@ -317,25 +277,39 @@
                     <audio id="special-audio-element" class="hidden" src="https://raw.githubusercontent.com/igrm55/ayslan_audio/main/Ayslan_audio.mp3"></audio>
                 </div>
             </section>
-
-            <!-- Memory Game Section -->
-            <section class="scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Jogo da Memória da Amizade</h2>
-                <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">Vamos testar sua memória! Encontre os pares e reviva alguns dos nossos melhores momentos.</p>
-                <div class="max-w-3xl mx-auto bg-slate-900/70 p-4 md:p-6 rounded-lg shadow-2xl border border-slate-700">
-                    <div id="game-board" class="grid grid-cols-4 gap-2 md:gap-4">
-                        <!-- Memory cards inserted by JS -->
+            
+            <section id="password-section" class="scroll-reveal max-w-2xl mx-auto text-center">
+                <div id="password-gate" class="glass-card p-8">
+                     <i data-feather="lock" class="w-16 h-16 mx-auto mb-4 text-blue-400"></i>
+                    <h2 class="font-heading text-3xl md:text-4xl text-white mb-2">Uma Memória Secreta</h2>
+                    <p class="text-slate-400 mb-6" id="password-hint">Nome do lugar para onde fomos na nossa primeira viagem juntos.</p>
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <input type="password" id="password-input" placeholder="Qual a senha?" class="text-center rounded-lg p-3 text-white w-full sm:w-auto bg-black/20 border border-blue-500/30 focus:border-blue-400 focus:ring-2 focus:ring-blue-400 outline-none">
+                        <button id="unlock-btn" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-lg transition-colors w-full sm:w-auto">Desbloquear</button>
                     </div>
+                    <p id="password-error" class="hidden mt-4 text-sm text-red-500">Senha incorreta. Tente novamente!</p>
+                </div>
+                <div id="unlocked-message" class="hidden glass-card p-8">
+                    <i data-feather="star" class="w-16 h-16 mx-auto mb-4 text-amber-300"></i>
+                    <h2 class="font-heading text-3xl md:text-4xl text-amber-300 mb-4">Memórias da Ilha Morena</h2>
+                    <p class="text-lg text-slate-200 leading-relaxed">Lembrar daquela viagem para a Ilha Morena é lembrar de um dos momentos mais puros e felizes da nossa amizade. O sol, o mar, as risadas... tudo aquilo marcou o início de uma nova fase pra gente. Foi ali que eu tive a certeza de que nossa conexão era especial e duradoura. Que a vida nos permita criar muitas outras memórias tão incríveis quanto aquelas.</p>
+                </div>
+            </section>
+
+             <section class="scroll-reveal">
+                <h2 class="font-heading text-3xl md:text-4xl text-center text-glow mb-2">Jogo da Memória</h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">Encontre os pares e reviva nossos momentos.</p>
+                <div class="glass-card p-4 md:p-6 max-w-3xl mx-auto">
+                    <div id="game-board" class="grid grid-cols-4 gap-2 md:gap-4"></div>
                     <div class="text-center mt-6">
                         <button id="restart-game-btn" class="glowing-btn text-base py-2 px-6">Reiniciar Jogo</button>
                     </div>
                 </div>
             </section>
             
-            <!-- Friendship Proposal Section -->
-            <section class="scroll-reveal text-center py-20 my-16 bg-slate-900/50 rounded-lg border border-amber-500/10 shadow-2xl shadow-amber-500/5">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-glow mb-8">E para o futuro...</h2>
-                <p class="text-2xl mb-12 text-white max-w-2xl mx-auto">Você aceita continuar sendo o meu melhor amigo para sempre?</p>
+            <section class="scroll-reveal text-center py-16 glass-card">
+                <h2 class="font-heading text-3xl md:text-4xl text-glow mb-8">Um Pacto para o Futuro</h2>
+                <p class="text-2xl mb-12 text-white max-w-2xl mx-auto" id="proposal-text">Aceita continuar sendo meu melhor amigo até a eternidade?</p>
                 <div class="space-x-8">
                     <button class="glowing-btn proposal-btn text-xl">Sim!</button>
                     <button class="glowing-btn proposal-btn text-xl">Claro!</button>
@@ -344,425 +318,283 @@
 
         </main>
         
-        <footer class="text-center py-8 text-slate-500 text-sm border-t border-slate-800">
+        <footer class="text-center py-8 text-slate-500 text-sm border-t border-blue-800/20 mt-20">
             <p>Feito com ❤️ por Ayslan.</p>
         </footer>
     </div>
     
-    <!-- General Purpose Modal -->
-    <div id="notification-modal" class="modal-overlay">
-        <div class="modal-content">
-            <p id="modal-text" class="text-2xl font-handwriting text-amber-200 mb-6"></p>
-            <button id="close-modal-btn" class="glowing-btn py-2 px-6">Fechar</button>
+    <div id="universal-modal-overlay" class="modal-overlay">
+        <div id="universal-modal-content" class="modal-content glass-card p-8 max-w-sm w-11/12 text-center">
+            <p id="modal-text" class="text-xl font-medium text-white mb-6"></p>
+            <button id="close-modal-btn" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-8 rounded-full transition-colors">Fechar</button>
         </div>
     </div>
     
-    <!-- Finale Animation Canvas & Overlay -->
-    <canvas id="finale-canvas"></canvas>
     <div id="finale-overlay" class="modal-overlay p-4">
         <div class="relative w-full h-full flex items-center justify-center">
-            <svg id="parchment-svg" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid meet" class="card-texture rounded-lg shadow-2xl border-2 border-amber-800/50">
+            <svg id="parchment-svg" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid meet" class="parchment-texture rounded-lg shadow-2xl border-2 border-amber-800/50">
                 <style>
-                    #parchment-svg .title { font-family: 'Playfair Display', serif; font-size: 36px; text-anchor: middle; fill: #2a2a2a; }
-                    #parchment-svg .body-text { font-family: 'Inter', sans-serif; font-size: 16px; text-anchor: middle; fill: #586e75; }
-                    #parchment-svg .bold-text { font-weight: bold; }
+                    #parchment-svg .title { font-family: 'Poppins', serif; font-size: 28px; font-weight: 700; text-anchor: middle; fill: #5a3a1b; }
+                    #parchment-svg .body-text { font-family: 'Poppins', sans-serif; font-size: 16px; text-anchor: middle; fill: #586e75; }
                     #parchment-svg .signature-text { font-family: 'Great Vibes', cursive; font-size: 50px; text-anchor: middle; fill: #005a9c; }
-                    #parchment-svg .signed-by { font-size: 14px; text-anchor: middle; fill: #586e75; }
-                    #parchment-svg .accepted-text { font-size: 18px; text-anchor: middle; font-weight: bold; fill: #c0392b;}
                 </style>
-                <text x="200" y="60" class="title">Contrato de Amizade</text>
-                <text x="200" y="120" class="body-text">Já vivemos tantas coisas incríveis até aqui,</text>
-                <text x="200" y="145" class="body-text">e certamente é apenas o começo.</text>
-                <text x="200" y="180" class="body-text">Nossa parceria é para a vida toda,</text>
-                <text x="200" y="205" class="body-text">um pacto de lealdade, risadas e</text>
-                <text x="200" y="230" class="body-text">apoio incondicional.</text>
-                <text x="200" y="280" class="body-text bold-text">Que venham mais capítulos desta história.</text>
-                <text x="200" y="350" class="accepted-text">Contrato Aceito e Renovado</text>
-                <text x="200" y="450" class="signed-by">Assinado por:</text>
-                <text x="200" y="500" class="signature-text">Jeferson</text>
+                <text x="200" y="60" class="title" id="parchment-title">Contrato de Melhores Amigos</text>
+                <text x="200" y="100" class="title" id="parchment-status">Renovado</text>
+                <text x="200" y="180" class="body-text">Já vivemos tantas coisas incríveis até aqui,</text>
+                <text x="200" y="205" class="body-text">e certamente é apenas o começo.</text>
+                <text x="200" y="280" class="body-text" style="font-weight: 600;">Que venham mais capítulos desta história.</text>
+                <text x="200" y="450" class="body-text">Assinado por:</text>
+                <text x="200" y="520" class="signature-text">Jeferson</text>
             </svg>
-             <button id="close-finale-btn"><i data-feather="x"></i></button>
+             <button id="close-finale-btn"><i data-feather="x" class="w-8 h-8"></i></button>
         </div>
     </div>
 
+    <canvas id="finale-canvas"></canvas>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            feather.replace();
-
-            const imageSources = ['https://i.postimg.cc/SQfPD9M0/b9e72434-91f4-48a8-bfe9-880fc110c4b1.jpg', 'https://i.postimg.cc/5NPRMMgn/36755635-30f5-4ad4-b7b9-ce6b93e93990.jpg', 'https://i.postimg.cc/WbpHK4Gd/24462ad1-ac80-4795-b49e-9798390589d1.jpg', 'https://i.postimg.cc/dVLSsSSv/3b4d2e77-3815-4fdd-b21b-04ebd3a97bec.jpg', 'https://i.postimg.cc/85BZX8sd/2418fd8d-d268-4bc4-854e-7003361a44b8.jpg', 'https://i.postimg.cc/MGBPRfSF/58ffa755-5a11-489b-a498-e10e5a819b85.jpg', 'https://i.postimg.cc/SspZGQQN/9218cd6a-1df4-46d3-8be8-9dd85b3a7ce5.jpg', 'https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg', 'https://i.postimg.cc/66cHdNkt/c5a43a50-32f9-4024-a03a-254f518ca858.jpg', 'https://i.postimg.cc/brm38Qxs/6219e37f-a6d8-489e-b3c4-e6f83fded76e.jpg', 'https://i.postimg.cc/9FfLbn2T/26958c37-f10d-4b1e-a001-f2d90c035734.jpg', 'https://i.postimg.cc/GhSq5x3f/9d2d6e91-e2a3-4f84-b6e9-91fd7f7fa2ea.jpg', 'https://i.postimg.cc/0yTZ85wd/180047be-01e2-4542-8dec-44978622ea1d.jpg'];
+            // --- CONFIGURAÇÕES GLOBAIS ---
             const isMobile = window.innerWidth < 768;
+            const imageSources = ['https://i.postimg.cc/SQfPD9M0/b9e72434-91f4-48a8-bfe9-880fc110c4b1.jpg', 'https://i.postimg.cc/5NPRMMgn/36755635-30f5-4ad4-b7b9-ce6b93e93990.jpg', 'https://i.postimg.cc/WbpHK4Gd/24462ad1-ac80-4795-b49e-9798390589d1.jpg', 'https://i.postimg.cc/dVLSsSSv/3b4d2e77-3815-4fdd-b21b-04ebd3a97bec.jpg', 'https://i.postimg.cc/85BZX8sd/2418fd8d-d268-4bc4-854e-7003361a44b8.jpg', 'https://i.postimg.cc/MGBPRfSF/58ffa755-5a11-489b-a498-e10e5a819b85.jpg', 'https://i.postimg.cc/SspZGQQN/9218cd6a-1df4-46d3-8be8-9dd85b3a7ce5.jpg', 'https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg', 'https://i.postimg.cc/66cHdNkt/c5a43a50-32f9-4024-a03a-254f518ca858.jpg', 'https://i.postimg.cc/brm38Qxs/6219e37f-a6d8-489e-b3c4-e6f83fded76e.jpg', 'https://i.postimg.cc/9FfLbn2T/26958c37-f10d-4b1e-a001-f2d90c035734.jpg', 'https://i.postimg.cc/GhSq5x3f/9d2d6e91-e2a3-4f84-b6e9-91fd7f7fa2ea.jpg', 'https://i.postimg.cc/0yTZ85wd/180047be-01e2-4542-8dec-44978622ea1d.jpg'];
 
-            // --- Performance Utilities ---
-            function throttle(func, limit) {
-                let inThrottle;
-                return function() {
-                    const args = arguments;
-                    const context = this;
-                    if (!inThrottle) {
-                        func.apply(context, args);
-                        inThrottle = true;
-                        setTimeout(() => inThrottle = false, limit);
-                    }
-                };
-            }
-
-            // --- Background Starfield ---
-            const bgCanvas = document.getElementById('background-canvas');
-            const bgCtx = bgCanvas.getContext('2d');
-            let stars = [];
+            // --- INICIALIZAÇÃO DE TODAS AS FUNÇÕES ---
+            feather.replace();
+            initStarfield();
+            initScrollReveal();
+            initFriendshipTimer();
+            initThankYouGrid();
+            initAudioPlayers();
+            initCarousel();
+            initPasswordGate();
+            initMemoryGame();
+            initProposalFinale();
             
-            function setupStars() {
-                bgCanvas.width = window.innerWidth;
-                bgCanvas.height = window.innerHeight;
-                stars = [];
-                const starCount = isMobile ? 80 : 200;
-                for (let i = 0; i < starCount; i++) {
-                    stars.push({
-                        x: Math.random() * bgCanvas.width,
-                        y: Math.random() * bgCanvas.height,
-                        radius: Math.random() * 1.5,
-                        alpha: Math.random() * 0.5 + 0.5,
-                        velocity: { x: (Math.random() - 0.5) * 0.1, y: (Math.random() - 0.5) * 0.1 }
-                    });
-                }
-            }
-
-            function animateStars() {
-                bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-                bgCtx.fillStyle = 'rgba(253, 230, 138, 0.8)';
-                stars.forEach(star => {
-                    star.x += star.velocity.x;
-                    star.y += star.velocity.y;
-
-                    if (star.x < 0 || star.x > bgCanvas.width) star.velocity.x *= -1;
-                    if (star.y < 0 || star.y > bgCanvas.height) star.velocity.y *= -1;
-                    
-                    bgCtx.globalAlpha = star.alpha;
-                    bgCtx.beginPath();
-                    bgCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                    bgCtx.fill();
-                });
-                requestAnimationFrame(animateStars);
-            }
-
-            // --- General Modal Logic ---
-            const notificationModal = document.getElementById('notification-modal');
-            const modalText = document.getElementById('modal-text');
-            const closeModalBtn = document.getElementById('close-modal-btn');
-            function showModal(message) { modalText.innerHTML = message; notificationModal.classList.add('active'); }
-            closeModalBtn.addEventListener('click', () => notificationModal.classList.remove('active'));
-            notificationModal.addEventListener('click', (e) => { if (e.target === notificationModal) notificationModal.classList.remove('active'); });
-
-            // --- Entry & Scroll Logic ---
             document.getElementById('open-surprise-btn').addEventListener('click', () => {
-                document.getElementById('entry-screen').style.opacity = '0';
-                document.getElementById('entry-screen').style.pointerEvents = 'none';
+                const entryScreen = document.getElementById('entry-screen');
+                entryScreen.style.opacity = '0';
+                entryScreen.style.pointerEvents = 'none';
                 document.getElementById('main-content').style.opacity = '1';
-                document.getElementById('background-canvas').style.opacity = '1';
-                setupStars();
-                animateStars();
-                setTimeout(() => handleScrollReveal(), 500);
+                setTimeout(() => {
+                    entryScreen.style.display = 'none';
+                    document.body.style.overflowY = 'auto';
+                }, 1000);
             });
+            document.body.style.overflowY = 'hidden';
 
-            const scrollElements = document.querySelectorAll('.scroll-reveal');
-            const handleScrollReveal = () => scrollElements.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible'); });
-            
-            // --- Generic Audio Player Setup ---
-            function setupAudioPlayer(config) {
-                const audio = document.getElementById(config.audioId);
-                const playPauseBtn = document.getElementById(config.playPauseId);
-                const seekBarContainer = document.getElementById(config.seekBarContainerId);
-                const progress = document.getElementById(config.progressId);
-                const thumb = document.getElementById(config.thumbId);
-                const currentTimeDisplay = document.getElementById(config.currentTimeId);
-                const durationDisplay = document.getElementById(config.durationId);
-                function formatTime(seconds) { if (isNaN(seconds)) return "0:00"; const minutes = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${minutes}:${String(secs).padStart(2, '0')}`; }
-                playPauseBtn.addEventListener('click', () => { if (audio.paused) { audio.play(); playPauseBtn.innerHTML = '<i data-feather="pause" class="w-7 h-7"></i>'; } else { audio.pause(); playPauseBtn.innerHTML = '<i data-feather="play" class="ml-1 w-7 h-7"></i>'; } feather.replace(); });
-                audio.addEventListener('loadedmetadata', () => { if (durationDisplay) durationDisplay.textContent = formatTime(audio.duration); });
-                audio.addEventListener('timeupdate', () => { const percentage = (audio.currentTime / audio.duration) * 100; progress.style.width = `${percentage}%`; thumb.style.left = `${percentage}%`; if (currentTimeDisplay) currentTimeDisplay.textContent = formatTime(audio.currentTime); });
-                audio.addEventListener('ended', () => { playPauseBtn.innerHTML = '<i data-feather="play" class="ml-1 w-7 h-7"></i>'; feather.replace(); });
-                seekBarContainer.addEventListener('click', (e) => { const rect = seekBarContainer.getBoundingClientRect(); const clickX = e.clientX - rect.left; const percentage = (clickX / rect.width); audio.currentTime = audio.duration * percentage; });
-            }
-            setupAudioPlayer({ audioId: 'authors-song-audio', playPauseId: 'authors-song-play-pause', seekBarContainerId: 'authors-song-seek-bar-container', progressId: 'authors-song-seek-bar-progress', thumbId: 'authors-song-seek-bar-thumb', currentTimeId: 'authors-song-time-current', durationId: 'authors-song-time-duration' });
-            setupAudioPlayer({ audioId: 'special-audio-element', playPauseId: 'special-audio-play-pause', seekBarContainerId: 'special-audio-seek-bar-container', progressId: 'special-audio-seek-bar-progress', thumbId: 'special-audio-seek-bar-thumb', currentTimeId: 'special-audio-time-current', durationId: 'special-audio-time-duration' });
+            // --- FUNÇÕES ---
 
-            // --- Photo Carousel (Adaptive Shape) ---
-            const carouselWrapper = document.getElementById('carousel-wrapper');
-            const carouselContainer = document.getElementById('carousel-container');
-            const blinkOverlay = document.getElementById('carousel-blink-overlay');
-            let currentImageIndex = 0;
-            let carouselItems = [];
-            let preloadedImages = [];
-
-            function preloadImagesAndBuildCarousel() {
-                let loadedCount = 0;
-                imageSources.forEach((src, index) => {
-                    const img = new Image();
-                    img.src = src;
-                    img.className = 'carousel-item-img';
-                    preloadedImages[index] = img;
-                    img.onload = () => {
-                        loadedCount++;
-                        if (loadedCount === imageSources.length) {
-                             buildCarouselDOM();
-                        }
-                    };
-                });
-            }
-            
-            function buildCarouselDOM() {
-                carouselContainer.innerHTML = '';
-                preloadedImages.forEach((img, index) => {
-                    const item = document.createElement('div');
-                    item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
-                    item.appendChild(img);
-                    carouselContainer.appendChild(item);
-                });
-                carouselItems = Array.from(carouselContainer.children);
-                setContainerSize(0);
-            }
-            
-            function setContainerSize(index) {
-                const image = preloadedImages[index];
-                if (image && image.naturalWidth > 0) {
-                    const wrapperWidth = carouselWrapper.offsetWidth;
-                    if (wrapperWidth === 0) { 
-                        setTimeout(() => setContainerSize(index), 50);
-                        return;
-                    }
-                    const aspectRatio = image.naturalHeight / image.naturalWidth;
-                    let targetHeight = wrapperWidth * aspectRatio;
-                    const maxHeight = window.innerHeight * 0.8;
-                    if (targetHeight > maxHeight) {
-                        targetHeight = maxHeight;
-                    }
-                    carouselContainer.style.height = `${targetHeight}px`;
-                } else {
-                    setTimeout(() => setContainerSize(index), 100);
+            function initStarfield() {
+                const canvas = document.getElementById('background-canvas'), ctx = canvas.getContext('2d');
+                canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+                let stars = [], starCount = isMobile ? 100 : 200;
+                for (let i=0; i<starCount; i++) stars.push({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, radius:Math.random()*1.5+0.5, alpha:Math.random()*0.8+0.2, velocity:{x:(Math.random()-0.5)*0.2,y:(Math.random()-0.5)*0.2}});
+                function animate() {
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                    stars.forEach(s=>{s.x+=s.velocity.x; s.y+=s.velocity.y; if(s.x<0||s.x>canvas.width)s.velocity.x*=-1; if(s.y<0||s.y>canvas.height)s.velocity.y*=-1; ctx.beginPath();ctx.arc(s.x,s.y,s.radius,0,Math.PI*2);ctx.fillStyle=`rgba(224,230,241,${s.alpha})`;ctx.fill();});
+                    requestAnimationFrame(animate);
                 }
-            }
-
-            function changeImage(direction) {
-                const nextIndex = (currentImageIndex + direction + imageSources.length) % imageSources.length;
-                blinkOverlay.style.opacity = '1';
-                setTimeout(() => {
-                    setContainerSize(nextIndex);
-                    setTimeout(() => {
-                        carouselItems[currentImageIndex].classList.remove('active');
-                        carouselItems[nextIndex].classList.add('active');
-                        currentImageIndex = nextIndex;
-                        setTimeout(() => {
-                            blinkOverlay.style.opacity = '0';
-                        }, 50); 
-                    }, 200); 
-                }, 150); 
+                animate();
+                window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
             }
             
-            document.getElementById('next-btn').addEventListener('click', () => changeImage(1));
-            document.getElementById('prev-btn').addEventListener('click', () => changeImage(-1));
-            
-            // --- Throttled Event Listeners ---
-            const throttledScroll = throttle(handleScrollReveal, 100);
-            const throttledResize = throttle(() => {
-                setupStars();
-                setContainerSize(currentImageIndex);
-            }, 250);
-
-            window.addEventListener('scroll', throttledScroll);
-            window.addEventListener('resize', throttledResize);
-            
-            preloadImagesAndBuildCarousel();
-
-            // --- Memory Game ---
-            const gameBoard = document.getElementById('game-board');
-            const restartBtn = document.getElementById('restart-game-btn');
-            const gameImages = imageSources.slice(0, 8);
-            let cardData = [...gameImages, ...gameImages];
-            let flippedCards = [], lockBoard = false, matchedPairs = 0;
-            function createBoard() {
-                gameBoard.innerHTML = ''; matchedPairs = 0; cardData.sort(() => Math.random() - 0.5);
-                cardData.forEach(imageSrc => {
-                    const card = document.createElement('div'); card.className = 'memory-card w-full aspect-square cursor-pointer'; card.dataset.image = imageSrc;
-                    card.innerHTML = `<div class="memory-card-inner"><div class="card-face card-front"><i data-feather="gift" class="w-10 h-10"></i></div><div class="card-face card-back"><img src="${imageSrc}" onerror="this.src='https://placehold.co/100x100/1a202c/e5e7eb?text=:)';"></div></div>`;
-                    card.addEventListener('click', function() {
-                        if (lockBoard || this.classList.contains('is-flipped') || this.classList.contains('matched')) return;
-                        this.classList.add('is-flipped');
-                        if (flippedCards.length === 0) { flippedCards.push(this); return; }
-                        flippedCards.push(this); lockBoard = true;
-                        if (flippedCards[0].dataset.image === flippedCards[1].dataset.image) {
-                            matchedPairs++; flippedCards[0].classList.add('matched'); flippedCards[1].classList.add('matched');
-                            [flippedCards, lockBoard] = [[], false];
-                            if (matchedPairs === gameImages.length) { setTimeout(() => { showModal('Parabéns! <br> Você encontrou todos os pares!'); setTimeout(createBoard, 1500); }, 800); }
-                        } else { setTimeout(() => { flippedCards.forEach(c => c.classList.remove('is-flipped')); [flippedCards, lockBoard] = [[], false]; }, 1200); }
-                    });
-                    gameBoard.appendChild(card);
-                });
-                feather.replace();
+            function initScrollReveal() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);} });
+                }, { threshold: 0.1 });
+                document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
             }
-            restartBtn.addEventListener('click', createBoard);
-            createBoard();
 
-            // --- Finale ---
-            const proposalBtns = document.querySelectorAll('.proposal-btn');
-            const finaleOverlay = document.getElementById('finale-overlay');
-            const parchment = document.getElementById('parchment-svg');
-            const closeFinaleBtn = document.getElementById('close-finale-btn');
-            const canvas = document.getElementById('finale-canvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            let animationFrameId;
-            let stopSpawning = false;
-
-            function handleFinale() {
-                finaleOverlay.classList.add('active');
-                setTimeout(() => {
-                    const svgHeight = 600, svgWidth = 400, aspectRatio = svgWidth / svgHeight;
-                    const containerHeight = finaleOverlay.clientHeight * 0.9, containerWidth = containerHeight * aspectRatio;
-                    parchment.style.width = `${Math.min(containerWidth, finaleOverlay.clientWidth * 0.9)}px`;
-                    parchment.style.height = `${containerHeight}px`;
-                }, 100);
+            function initFriendshipTimer() {
+                const startDate=new Date('2024-09-03T00:00:00'), t={d:document.getElementById('days'),h:document.getElementById('hours'),m:document.getElementById('minutes'),s:document.getElementById('seconds')};
+                function update() {
+                    const diff=new Date()-startDate; t.s.textContent=String(Math.floor((diff/1000)%60)).padStart(2,'0'); t.m.textContent=String(Math.floor((diff/1000/60)%60)).padStart(2,'0'); t.h.textContent=String(Math.floor((diff/(1000*60*60))%24)).padStart(2,'0'); t.d.textContent=Math.floor(diff/(1000*60*60*24));
+                }
+                setInterval(update,1000); update();
             }
             
-            function closeFinale() {
-                parchment.style.height = '0';
-                parchment.style.width = '0';
-                closeFinaleBtn.style.opacity = '0';
+            function initThankYouGrid() {
+                const grid=document.getElementById('thank-you-grid'), messages=["Obrigado por ser meu melhor amigo","Obrigado por estar sempre ao meu lado","Obrigado por fazer parte da minha vida","Obrigado pelas vezes em que enxugou minhas lágrimas","Obrigado pelas vezes em que se pausou por mim","Obrigado por se importar comigo","Obrigado por sempre me incentivar","Obrigado por sempre me colocar pra cima","Obrigado por cada conselho","Obrigado por confiar em mim","Obrigado por nunca desistir da nossa melhor amizade","Obrigado por ser esse presente de Deus em minha vida"];
+                messages.forEach((msg, i) => { const shape=document.createElement('div'); shape.className='thank-you-shape'; shape.innerHTML=`<span class="text-white font-bold text-xl drop-shadow-lg">${i+1}</span>`; shape.addEventListener('click',()=>showModal(msg)); grid.appendChild(shape); });
+            }
+
+            function initAudioPlayers() {
+                function setupAudioPlayer(config) {
+                    const audio=document.getElementById(config.audioId), playPauseBtn=document.getElementById(config.playPauseId), seekBarContainer=document.getElementById(config.seekBarContainerId), progress=document.getElementById(config.progressId), thumb=document.getElementById(config.thumbId), currentTimeDisplay=document.getElementById(config.currentTimeId), durationDisplay=document.getElementById(config.durationId);
+                    function formatTime(s){if(isNaN(s))return"0:00";const m=Math.floor(s/60),c=Math.floor(s%60);return`${m}:${String(c).padStart(2,'0')}`}
+                    playPauseBtn.addEventListener('click',()=>{if(audio.paused){audio.play();playPauseBtn.innerHTML='<i data-feather="pause" class="w-7 h-7"></i>'}else{audio.pause();playPauseBtn.innerHTML='<i data-feather="play" class="ml-1 w-7 h-7"></i>'}feather.replace()});
+                    audio.addEventListener('loadedmetadata',()=>{if(durationDisplay)durationDisplay.textContent=formatTime(audio.duration)});
+                    audio.addEventListener('timeupdate',()=>{const p=(audio.currentTime/audio.duration)*100;progress.style.width=`${p}%`;thumb.style.left=`${p}%`;if(currentTimeDisplay)currentTimeDisplay.textContent=formatTime(audio.currentTime)});
+                    audio.addEventListener('ended',()=>{playPauseBtn.innerHTML='<i data-feather="play" class="ml-1 w-7 h-7"></i>';feather.replace()});
+                    seekBarContainer.addEventListener('click',(e)=>{const r=seekBarContainer.getBoundingClientRect(),x=e.clientX-r.left,p=(x/r.width);audio.currentTime=audio.duration*p});
+                }
+                setupAudioPlayer({audioId:'authors-song-audio',playPauseId:'authors-song-play-pause',seekBarContainerId:'authors-song-seek-bar-container',progressId:'authors-song-seek-bar-progress',thumbId:'authors-song-seek-bar-thumb',currentTimeId:'authors-song-time-current',durationId:'authors-song-time-duration'});
+                setupAudioPlayer({audioId:'special-audio-element',playPauseId:'special-audio-play-pause',seekBarContainerId:'special-audio-seek-bar-container',progressId:'special-audio-seek-bar-progress',thumbId:'special-audio-seek-bar-thumb',currentTimeId:'special-audio-time-current',durationId:'special-audio-time-duration'});
+            }
+
+            function initCarousel() {
+                const carouselInner=document.getElementById('carousel-inner'); let currentIndex=0,items=[];
+                imageSources.forEach((src,index)=>{const item=document.createElement('div');item.className=`carousel-item ${index===0?'active':''}`;item.innerHTML=`<img src="${src}" alt="Memória ${index+1}" loading="lazy">`;carouselInner.appendChild(item)});
+                items=carouselInner.children;
+                function showImage(i){items[currentIndex].classList.remove('active');currentIndex=(i+items.length)%items.length;items[currentIndex].classList.add('active')}
+                document.getElementById('next-btn').addEventListener('click',()=>showImage(currentIndex+1));
+                document.getElementById('prev-btn').addEventListener('click',()=>showImage(currentIndex-1));
+            }
+            
+            function initPasswordGate() {
+                const i=document.getElementById('password-input'),b=document.getElementById('unlock-btn'),e=document.getElementById('password-error'),g=document.getElementById('password-gate'),m=document.getElementById('unlocked-message');
+                const check=()=>{if(i.value.trim().toLowerCase()==="ilhamorena"){g.style.display='none';m.style.display='block';m.classList.add('scroll-reveal','visible')}else{e.style.display='block';i.value='';setTimeout(()=>e.style.display='none',3000)}};
+                b.addEventListener('click',check); i.addEventListener('keypress',(ev)=>ev.key==='Enter'&&check());
+            }
+
+            function initMemoryGame() {
+                const gameBoard=document.getElementById('game-board'),restartBtn=document.getElementById('restart-game-btn'),gameImages=imageSources.slice(0,8);
+                let cardData=[...gameImages,...gameImages],flippedCards=[],lockBoard=false,matchedPairs=0;
+                function createBoard(){
+                    gameBoard.innerHTML='';matchedPairs=0;lockBoard=false;flippedCards=[];cardData.sort(()=>0.5-Math.random());
+                    cardData.forEach(src=>{const card=document.createElement('div');card.className='memory-card w-full aspect-square cursor-pointer';card.dataset.image=src;card.innerHTML=`<div class="memory-card-inner"><div class="card-face card-front"><i data-feather="star" class="w-8 h-8 text-yellow-300"></i></div><div class="card-face card-back"><img src="${src}" onerror="this.parentElement.innerHTML='Error'"></div></div>`;card.addEventListener('click',flipCard);gameBoard.appendChild(card)});
+                    feather.replace();
+                }
+                function flipCard(){if(lockBoard||this.classList.contains('is-flipped'))return;this.classList.add('is-flipped');flippedCards.push(this);if(flippedCards.length===2)checkForMatch()}
+                function checkForMatch(){lockBoard=true;const[c1,c2]=flippedCards;if(c1.dataset.image===c2.dataset.image){matchedPairs++;c1.removeEventListener('click',flipCard);c2.removeEventListener('click',flipCard);if(matchedPairs===gameImages.length){setTimeout(()=>showModal("Parabéns!<br>Você encontrou todos os pares!"),1000)}resetBoard()}else{setTimeout(()=>{c1.classList.remove('is-flipped');c2.classList.remove('is-flipped');resetBoard()},1200)}}
+                function resetBoard(){[flippedCards,lockBoard]=[[],false]}
+                restartBtn.addEventListener('click',createBoard);createBoard();
+            }
+            
+            function initProposalFinale() {
+                const proposalBtns=document.querySelectorAll('.proposal-btn'),finaleOverlay=document.getElementById('finale-overlay'),parchment=document.getElementById('parchment-svg'),closeFinaleBtn=document.getElementById('close-finale-btn');
                 
+                function showParchment(){
+                    finaleOverlay.classList.add('active');
+                    setTimeout(()=>{
+                        const svgHeight=600,svgWidth=400,aspectRatio=svgWidth/svgHeight;
+                        const containerHeight=finaleOverlay.clientHeight*0.9,containerWidth=containerHeight*aspectRatio;
+                        parchment.style.width=`${Math.min(containerWidth,finaleOverlay.clientWidth*0.9)}px`;
+                        parchment.style.height=`${containerHeight}px`;
+                    },100);
+                }
+                
+                function closeParchment(){
+                    parchment.style.height='0';
+                    parchment.style.width='0';
+                    setTimeout(() => {
+                        finaleOverlay.classList.remove('active');
+                        launchFireworksCelebration();
+                    }, 500);
+                }
+
+                proposalBtns.forEach(btn=>btn.addEventListener('click',showParchment));
+                closeFinaleBtn.addEventListener('click',closeParchment);
+            }
+            
+            // --- NOVA ANIMAÇÃO DE CELEBRAÇÃO ---
+            function launchFireworksCelebration() {
+                const canvas = document.getElementById('finale-canvas');
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                let animationFrameId;
+
+                canvas.style.display = 'block';
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-                stopSpawning = false;
-                
-                const spawnInterval = setInterval(() => {
-                    if (stopSpawning) return;
-                    if (Math.random() > 0.3) createFirework();
-                    createConfetti();
-                }, 150);
+                canvas.style.opacity = 1;
 
-                animateParticles();
-                
-                // Stop spawning confetti/fireworks after 3 seconds
-                setTimeout(() => {
-                    stopSpawning = true;
-                    clearInterval(spawnInterval);
-                }, 3000); // Animation duration set to 3 seconds
+                const colors = ['#00BFFF', '#1E90FF', '#FFFFFF', '#ADD8E6'];
 
-                // Hide the overlay and stop the animation loop after 6 seconds total
-                setTimeout(() => {
-                    finaleOverlay.classList.remove('active');
-                     setTimeout(() => {
-                        cancelAnimationFrame(animationFrameId);
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        particles = [];
-                    }, 500);
-                }, 6000);
-            }
-
-            proposalBtns.forEach(btn => btn.addEventListener('click', handleFinale));
-            closeFinaleBtn.addEventListener('click', closeFinale);
-
-            const confettiColors = ['#fde68a', '#fcd34d', '#fbbf24', '#f59e0b', '#d97706', '#ffffff'];
-            function Confetti() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * -canvas.height;
-                this.w = Math.random() * 10 + 5;
-                this.h = Math.random() * 20 + 10;
-                this.opacity = this.w / 15;
-                this.vx = Math.random() * 2 - 1;
-                this.vy = Math.random() * 3 + 1;
-                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-                this.rotation = Math.random() * Math.PI * 2;
-                this.rotationSpeed = Math.random() * 0.02 - 0.01;
-            }
-            Confetti.prototype.draw = function() {
-                ctx.save();
-                ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
-                ctx.rotate(this.rotation);
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = this.color;
-                ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
-                ctx.restore();
-            };
-            Confetti.prototype.update = function(index) {
-                this.y += this.vy;
-                this.x += this.vx;
-                this.rotation += this.rotationSpeed;
-                if (this.y > canvas.height) {
-                    particles.splice(index, 1);
+                function Particle(x, y, radius, color, velocity) {
+                    this.x = x; this.y = y; this.radius = radius;
+                    this.color = color; this.velocity = velocity;
+                    this.alpha = 1;
                 }
-            };
-            function createConfetti() {
-                let count = isMobile ? 8 : 15;
-                while(count--) particles.push(new Confetti());
-            }
-            
-            function createFirework() {
-                const startX = canvas.width / 2;
-                const startY = canvas.height;
-                const endX = Math.random() * canvas.width * 0.6 + canvas.width * 0.2;
-                const endY = Math.random() * canvas.height * 0.4 + canvas.height * 0.1;
-                particles.push(new Firework(startX, startY, endX, endY));
-            }
 
-            function Firework(sx, sy, tx, ty) {
-                this.x = sx; this.y = sy; this.sx = sx; this.sy = sy; this.tx = tx; this.ty = ty;
-                this.distanceToTarget = Math.sqrt(Math.pow(tx - sx, 2) + Math.pow(ty - sy, 2));
-                this.distanceTraveled = 0;
-                this.coordinates = []; this.coordinateCount = 3;
-                while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
-                this.angle = Math.atan2(ty - sy, tx - sx);
-                this.speed = 4; this.acceleration = 1.05; this.brightness = Math.random() * 50 + 50;
-            }
-            Firework.prototype.update = function(index) {
-                this.coordinates.pop(); this.coordinates.unshift([this.x, this.y]);
-                this.speed *= this.acceleration;
-                const vx = Math.cos(this.angle) * this.speed; const vy = Math.sin(this.angle) * this.speed;
-                this.distanceTraveled = Math.sqrt(Math.pow(this.x - this.sx, 2) + Math.pow(this.y - this.sy, 2));
-                if (this.distanceTraveled >= this.distanceToTarget) {
-                    createSparks(this.tx, this.ty); particles.splice(index, 1);
-                } else { this.x += vx; this.y += vy; }
-            };
-            Firework.prototype.draw = function() {
-                ctx.beginPath(); ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
-                ctx.lineTo(this.x, this.y); ctx.strokeStyle = `hsl(45, 100%, ${this.brightness}%)`; ctx.stroke();
-            };
+                Particle.prototype.draw = function() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.restore();
+                }
 
-            function Spark(x, y) {
-                this.x = x; this.y = y; this.coordinates = []; this.coordinateCount = 5;
-                while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
-                this.angle = Math.random() * (Math.PI * 2); this.speed = Math.random() * 10 + 1;
-                this.friction = 0.95; this.gravity = 1; this.hue = Math.random() * 60;
-                this.brightness = Math.random() * 50 + 50; this.alpha = 1; this.decay = Math.random() * 0.015 + 0.015;
-            }
-            Spark.prototype.update = function(index) {
-                this.coordinates.pop(); this.coordinates.unshift([this.x, this.y]);
-                this.speed *= this.friction; this.x += Math.cos(this.angle) * this.speed; this.y += Math.sin(this.angle) * this.speed + this.gravity;
-                this.alpha -= this.decay;
-                if (this.alpha <= this.decay) particles.splice(index, 1);
-            };
-            Spark.prototype.draw = function() {
-                ctx.beginPath(); ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
-                ctx.lineTo(this.x, this.y); ctx.strokeStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${this.alpha})`; ctx.stroke();
-            };
-            
-            function createSparks(x, y) {
-                let sparkCount = isMobile ? 50 : 100;
-                while (sparkCount--) particles.push(new Spark(x, y));
-            }
-            
-            function animateParticles() {
-                if(!finaleOverlay.classList.contains('active')) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                Particle.prototype.update = function(index) {
+                    this.velocity.x *= 0.99;
+                    this.velocity.y += 0.05; // gravity
+                    this.x += this.velocity.x;
+                    this.y += this.velocity.y;
+                    this.alpha -= 0.02;
+                    if(this.alpha <= 0) particles.splice(index, 1);
+                    this.draw();
+                }
+
+                function createExplosion(x, y) {
+                    const particleCount = isMobile ? 100 : 200;
+                    const angleIncrement = (Math.PI * 2) / particleCount;
+                    for (let i = 0; i < particleCount; i++) {
+                        const radius = Math.random() * 3 + 1;
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        const power = Math.random() * 10 + 5;
+                        particles.push(new Particle(x, y, radius, color, {
+                            x: Math.cos(angleIncrement * i) * power,
+                            y: Math.sin(angleIncrement * i) * power
+                        }));
+                    }
+                }
+
+                let launchCount = 0;
+                const launchInterval = setInterval(() => {
+                    if (launchCount < 5) {
+                        createExplosion(Math.random() * canvas.width, Math.random() * canvas.height / 2);
+                        launchCount++;
+                    } else {
+                        clearInterval(launchInterval);
+                    }
+                }, 400);
+
+                let textAlpha = 0;
+                let textReachedMax = false;
+                
+                function animate() {
+                    animationFrameId = requestAnimationFrame(animate);
+                    ctx.fillStyle = 'rgba(10, 15, 31, 0.2)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    particles.forEach((p, i) => p.update(i));
+
+                    // Animar o texto
+                    if(!textReachedMax && textAlpha < 1) textAlpha += 0.01;
+                    if(textAlpha >=1) textReachedMax = true;
+                    if(textReachedMax && launchCount >=5 && particles.length === 0) textAlpha -= 0.02;
+
+                    ctx.save();
+                    ctx.globalAlpha = textAlpha;
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.shadowColor = '#00BFFF';
+                    ctx.shadowBlur = 20;
+                    ctx.font = 'bold clamp(2rem, 10vw, 4rem) Poppins';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('Contrato Renovado!', canvas.width / 2, canvas.height / 2);
+                    ctx.restore();
+                }
+
+                animate();
+
+                setTimeout(() => {
                     cancelAnimationFrame(animationFrameId);
-                    particles = [];
-                    return;
-                }
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.globalCompositeOperation = 'lighter';
-                let i = particles.length; while (i--) { particles[i].draw(); particles[i].update(i); }
-                animationFrameId = requestAnimationFrame(animateParticles);
+                    canvas.style.transition = 'opacity 2s ease-out';
+                    canvas.style.opacity = 0;
+                    setTimeout(() => canvas.style.display = 'none', 2000);
+                }, 7000);
             }
+
+
+            // --- MODAL UNIVERSAL ---
+            const modalOverlay=document.getElementById('universal-modal-overlay');
+            function showModal(message){document.getElementById('modal-text').innerHTML=message;modalOverlay.classList.add('active')}
+            function closeModal(){modalOverlay.classList.remove('active')}
+            document.getElementById('close-modal-btn').addEventListener('click',closeModal);
+            modalOverlay.addEventListener('click', (e) => e.target === modalOverlay && closeModal());
         });
     </script>
 </body>
