@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uma Surpresa Especial</title>
+    <title>Uma Surpresa Especial para Jeferson</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,164 +11,195 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
     
+    <!-- Feather Icons for cleaner icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
     <!-- Custom Styles -->
     <style>
+        /* Base styles with a more refined palette */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #020617; /* Navy Blue, almost black */
-            color: #e2e8f0; /* Slate 200 */
-        }
-        .font-handwriting {
-            font-family: 'Dancing Script', cursive;
-        }
-        .card-texture {
-            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
-            background-color: #fdf6e3; /* Solarized Base3 */
-            color: #586e75; /* Solarized Base01 */
-        }
-        /* --- Carousel Styles --- */
-        .carousel-item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            pointer-events: none;
-        }
-        .carousel-item.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .carousel-item img {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 0.5rem;
-        }
-        #carousel-overlay {
-            transition: opacity 0.2s ease-in-out;
-        }
-        
-        /* --- Scroll Animation --- */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        .scroll-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* --- Text Glow Animation --- */
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 5px #fcd34d, 0 0 10px #fcd34d, 0 0 15px #f59e0b; }
-            50% { text-shadow: 0 0 10px #fde68a, 0 0 20px #fde68a, 0 0 30px #fbbf24; }
-        }
-        .text-glow {
-            animation: glow 4s ease-in-out infinite;
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A; /* Near black for a sophisticated feel */
+            color: #E5E7EB; /* Gray-200 for soft text */
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
-        /* --- 12 Thanks Styles with Pulse --- */
-        @keyframes pulse-diamond {
-            0%, 100% { transform: rotate(45deg) scale(1); }
-            50% { transform: rotate(45deg) scale(1.05); }
+        /* A more elegant handwriting font for headings */
+        .font-handwriting {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
-        .diamond {
-            transform: rotate(45deg);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            animation: pulse-diamond 3s ease-in-out infinite;
+
+        .font-signature {
+             font-family: 'Great Vibes', cursive;
         }
-        .diamond:hover {
-            transform: rotate(45deg) scale(1.1);
-            animation-play-state: paused; /* Pause pulse on hover */
-            background-color: #fcd34d; /* Amber 300 */
-        }
-        .diamond-inner {
-            transform: rotate(-45deg);
-        }
-        
-        /* --- Modal Styles --- */
-        .modal {
-            display: none; /* Hidden by default */
-            transition: opacity 0.3s ease;
-        }
-        
-        /* --- Finale Animation Styles --- */
-        #finale-overlay {
+
+        /* Background Starfield */
+        #background-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(2, 6, 23, 0.95);
-            z-index: 40;
+            z-index: -1;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: opacity 1s ease-in-out;
         }
-        #finale-overlay.active {
+
+        /* Card with a subtle paper texture and gradient border */
+        .card-texture {
+            background-image: url('https://www.transparenttextures.com/patterns/old-paper.png');
+            background-color: #fdf6e3; /* A warmer, more paper-like color */
+            color: #2a2a2a; /* Darker text for better contrast */
+            border: 2px solid;
+            border-image-slice: 1;
+            border-image-source: linear-gradient(to bottom right, #FBBF24, #DAA520);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(251, 191, 36, 0.2);
+        }
+
+        /* Glowing text effect for special titles */
+        @keyframes dynamic-glow {
+            0%, 100% { text-shadow: 0 0 5px #FCD34D, 0 0 10px #FCD34D, 0 0 20px #FBBF24, 0 0 30px #F59E0B; }
+            50% { text-shadow: 0 0 10px #FDE68A, 0 0 20px #FDE68A, 0 0 30px #FCD34D, 0 0 40px #FBBF24; }
+        }
+        .text-glow {
+            animation: dynamic-glow 3s ease-in-out infinite;
+            color: #FDE68A; /* Lighter Amber for more pop */
+        }
+
+        /* Section Reveal Animation */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .scroll-reveal.visible {
             opacity: 1;
-            pointer-events: all;
+            transform: translateY(0);
         }
-        #finale-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 35;
-            pointer-events: none;
+
+        /* --- ENTRANCE ANIMATION --- */
+        #entry-screen {
+             transition: opacity 1.5s ease-in-out, backdrop-filter 1.5s ease-in-out;
         }
-        #parchment-svg {
-            height: 0;
-            overflow: hidden;
-            transition: height 2.5s ease-in-out 0.5s;
-            max-width: 90vw;
-            max-height: 90vh;
+        @keyframes pulse-glow {
+            0% { transform: scale(1); box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 0 50px rgba(251, 191, 36, 0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(251, 191, 36, 0.6), 0 0 100px rgba(251, 191, 36, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 0 50px rgba(251, 191, 36, 0.2); }
         }
-        .proposal-btn {
-            border: 2px solid #fcd34d;
-            color: #fcd34d;
-            transition: background-color 0.3s, color 0.3s;
+        #open-surprise-btn {
+            border: 2px solid #FBBF24;
+            color: #FDE68A;
+            background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.2) 0%, rgba(10,10,10,0) 70%);
+            animation: pulse-glow 3s infinite ease-in-out;
+            transition: all 0.3s ease;
         }
-        .proposal-btn:hover {
-            background-color: #fcd34d;
-            color: #020617;
+        #open-surprise-btn:hover {
+            transform: scale(1.1) !important; /* !important to override animation */
+            background: radial-gradient(ellipse at center, rgba(251, 191, 36, 0.4) 0%, rgba(10,10,10,0) 70%);
+            color: #fff;
         }
+
+        /* --- PHOTO CAROUSEL --- */
+        #carousel-container {
+            position: relative;
+            transition: height 0.4s ease-in-out, width 0.4s ease-in-out;
+            margin: auto; 
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.2);
+            border-radius: 0.75rem;
+        }
+        .carousel-item {
+            position: absolute; inset: 0; opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .carousel-item.active { opacity: 1; }
+        .carousel-item-img {
+            width: 100%; height: 100%; object-fit: contain; display: block;
+            border-radius: 0.75rem; 
+        }
+        #carousel-blink-overlay {
+            position: absolute; inset: 0; background-color: #0A0A0A;
+            z-index: 10; opacity: 0; pointer-events: none;
+            transition: opacity 0.15s ease-in-out; border-radius: 0.5rem;
+        }
+
+        /* --- CUSTOM AUDIO PLAYER --- */
+        .audio-player-container { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 1rem; padding: 1.5rem; max-width: 600px; margin: auto; box-shadow: 0 0 20px rgba(251, 191, 36, 0.1); }
+        .seek-bar-container { background: rgba(0, 0, 0, 0.5); height: 6px; border-radius: 3px; cursor: pointer; }
+        .seek-bar-progress { background: #FBBF24; height: 100%; border-radius: 3px; box-shadow: 0 0 5px #FBBF24; }
+        .seek-bar-thumb { width: 16px; height: 16px; background: white; border-radius: 50%; position: absolute; top: 50%; transform: translateY(-50%) scale(0); transition: transform 0.2s; }
+        .seek-bar-container:hover .seek-bar-thumb { transform: translateY(-50%) scale(1); }
+
+        /* --- MEMORY GAME --- */
+        .memory-card { perspective: 1000px; }
+        .memory-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+        .memory-card.is-flipped .memory-card-inner { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; }
+        .card-front { background-image: linear-gradient(135deg, #FDE68A, #F59E0B); color: #2D3748; box-shadow: inset 0 0 10px rgba(0,0,0,0.3); }
+        .card-back { background-color: #1a202c; transform: rotateY(180deg); padding: 0.25rem; }
+        .card-back img { max-width: 100%; max-height: 100%; object-fit: cover; border-radius: 0.375rem; }
+
+        /* --- MODAL --- */
+        .modal-overlay { display: none; position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 50; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: #111827; border: 2px solid #FBBF24; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(251, 191, 36, 0.3); text-align: center; max-width: 90%; width: 400px; transform: scale(0.95); transition: transform 0.3s ease; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        
+        /* --- PROPOSAL & GENERIC BUTTONS --- */
+        .glowing-btn {
+            border: 2px solid #FBBF24; color: #FBBF24; background-color: transparent; font-weight: 700; padding: 0.75rem 2rem; border-radius: 9999px;
+            transition: all 0.3s ease; transform-origin: center;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.2), inset 0 0 10px rgba(251, 191, 36, 0.1);
+        }
+        .glowing-btn:hover {
+            background-color: #FBBF24; color: #0A0A0A; transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.5), 0 0 50px rgba(251, 191, 36, 0.2);
+        }
+
+        /* --- FINAL SCREEN --- */
+        #finale-canvas { position: fixed; top: 0; left: 0; z-index: 80; pointer-events: none; }
+        #finale-overlay { z-index: 70; }
+        #parchment-svg { height: 0; overflow: hidden; transition: height 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s, width 2.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s; max-width: 90vw; max-height: 90vh; }
+        #close-finale-btn { position: absolute; top: 1rem; right: 1rem; color: #586e75; background: rgba(0,0,0,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; z-index: 90; transition: color 0.3s, background 0.3s, transform 0.3s; opacity: 0; pointer-events: none;}
+        #close-finale-btn:hover { color: #c0392b; background: rgba(0,0,0,0.2); transform: scale(1.1); }
+        #finale-overlay.active #close-finale-btn { opacity: 1; pointer-events: all; transition-delay: 2.5s; }
+
     </style>
 </head>
-<body class="bg-slate-950 antialiased">
+<body class="antialiased">
+
+    <canvas id="background-canvas"></canvas>
 
     <!-- Entry Screen -->
-    <div id="entry-screen" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center transition-opacity duration-1000">
-        <h1 class="font-handwriting text-5xl md:text-7xl text-amber-300 drop-shadow-lg mb-8 text-center px-4 text-glow">Uma Surpresa Especial...</h1>
-        <button id="open-surprise-btn" class="bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-3 px-8 rounded-full text-xl transition-transform transform hover:scale-105 shadow-lg shadow-amber-500/20">
-            Clique para Abrir
+    <div id="entry-screen" class="fixed inset-0 bg-[#0A0A0A] z-[100] flex flex-col items-center justify-center transition-opacity duration-1000 p-4">
+        <h1 class="font-handwriting text-5xl md:text-7xl text-amber-300 drop-shadow-lg mb-6 text-center text-glow">Um Presente Especial...</h1>
+        <p class="text-slate-300 text-lg md:text-xl mb-12 text-center">Feito com o coração, para você.</p>
+        <button id="open-surprise-btn" class="w-48 h-48 rounded-full text-xl flex items-center justify-center flex-col">
+            <i data-feather="gift" class="w-16 h-16 mb-2"></i>
+            Abrir
         </button>
     </div>
 
     <!-- Main Content -->
-    <div id="main-content" class="opacity-0 transition-opacity duration-1000">
+    <div id="main-content" class="opacity-0 transition-opacity duration-1000 relative z-10">
         <!-- Header -->
-        <header class="text-center py-20 px-4 bg-cover bg-center" style="background-image: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 1)), url('https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg');">
-            <h1 class="font-handwriting text-5xl md:text-7xl text-amber-300 drop-shadow-lg scroll-reveal text-glow">Para Jeferson, Meu Melhor Amigo</h1>
-            <p class="mt-4 text-lg text-slate-300 scroll-reveal" style="transition-delay: 200ms;">Uma celebração da nossa amizade.</p>
+        <header class="text-center py-24 md:py-32 px-4 relative bg-cover bg-center bg-fixed" style="background-image: linear-gradient(to top, #0A0A0A 5%, rgba(10, 10, 10, 0.7)), url('https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg');">
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="relative z-10">
+                <h1 class="font-handwriting text-6xl md:text-8xl text-glow drop-shadow-lg scroll-reveal">Para Jeferson, Meu Melhor Amigo</h1>
+                <p class="mt-4 text-xl text-slate-200 scroll-reveal" style="transition-delay: 200ms;">Uma celebração da nossa amizade.</p>
+            </div>
         </header>
 
-        <main class="container mx-auto px-4 py-12 space-y-28">
+        <main class="container mx-auto px-4 py-12 space-y-24 md:space-y-32">
 
             <!-- Letter Section -->
             <section class="flex justify-center scroll-reveal">
-                 <div class="card-texture p-8 md:p-12 rounded-lg shadow-2xl max-w-4xl transform hover:scale-[1.02] transition-transform duration-500 border-2 border-amber-800/20">
-                    <h2 class="font-handwriting text-4xl text-amber-900 mb-6 border-b-2 border-amber-500 pb-2">Uma Carta do Coração...</h2>
+                <div class="card-texture p-8 md:p-12 rounded-lg max-w-4xl transform hover:scale-[1.02] transition-transform duration-500">
+                    <h2 class="font-handwriting text-4xl text-amber-900 mb-6 border-b-2 border-amber-800/20 pb-2">Uma Carta do Coração...</h2>
                     <div class="text-lg space-y-4 leading-relaxed font-light">
                         <p>Jeferson, meu melhor amigo,</p>
                         <p>Hoje me peguei pensando em tudo o que a nossa amizade significa pra mim, e senti uma vontade enorme de te escrever essas palavras, do fundo do coração.</p>
@@ -177,407 +208,512 @@
                         <p>Mesmo morando tão longe, lá em Oz, onde parece que tudo é mais distante e fora de alcance… nossa amizade continua firme, forte, inabalável. A distância, ao invés de nos afastar, só serviu pra mostrar o quanto a gente se importa um com o outro. Cada mensagem, cada ligação, cada reencontro — tudo ganha ainda mais valor.</p>
                         <p>Sou muito feliz com nossa amizade com tudo o que ela representa. Sei que a vida ainda vai mudar muito, nos levar por caminhos inesperados, mas de uma coisa eu tenho certeza: seremos melhores amigos até a eternidade. Nada pode mudar isso.</p>
                         <p>Obrigado por ser quem você é. Obrigado por estar na minha vida.</p>
-                        <p class="text-right font-handwriting text-2xl mt-8">Do seu melhor amigo<br>Ayslan</p>
+                        <p class="text-right font-signature text-5xl mt-8 text-amber-900/90">Do seu melhor amigo<br>Ayslan</p>
                     </div>
                 </div>
+            </section>
+            
+            <!-- Author's Song Section -->
+            <section class="scroll-reveal text-center">
+                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Uma Canção Especial</h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto">Uma canção que fiz exclusivamente, contando um pouco da história da nossa amizade.</p>
+                <div class="audio-player-container">
+                    <div class="flex items-center space-x-4">
+                        <button id="authors-song-play-pause" class="flex-shrink-0 w-14 h-14 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-amber-300 shadow-lg shadow-amber-500/20">
+                            <i data-feather="play" class="ml-1 w-7 h-7"></i>
+                        </button>
+                        <div class="flex-grow">
+                            <div class="text-left text-white font-medium text-lg">Daqui Até a Eternidade</div>
+                            <div class="text-left text-sm text-slate-400">Ayslan</div>
+                        </div>
+                    </div>
+                     <div class="mt-4 flex items-center space-x-3">
+                        <span id="authors-song-time-current" class="text-xs text-slate-400 w-12 text-center">0:00</span>
+                        <div class="seek-bar-container relative group flex-1" id="authors-song-seek-bar-container">
+                            <div id="authors-song-seek-bar-progress" class="seek-bar-progress"></div>
+                            <div id="authors-song-seek-bar-thumb" class="seek-bar-thumb"></div>
+                        </div>
+                        <span id="authors-song-time-duration" class="text-xs text-slate-400 w-12 text-center">0:00</span>
+                    </div>
+                </div>
+                <audio id="authors-song-audio" class="hidden" src="https://raw.githubusercontent.com/igrm55/aynslan_music/main/Daqui-Ate%CC%81-a-Eternidade-.mp3"></audio>
             </section>
 
             <!-- Photo Carousel Section -->
             <section class="scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-amber-300 mb-12 text-glow">Nossas Memórias</h2>
-                <div class="max-w-5xl mx-auto relative rounded-lg shadow-2xl overflow-hidden bg-slate-900">
-                    <div id="carousel-container" class="relative h-[70vh]">
-                        <!-- Images will be inserted here by JS -->
+                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Nossas Memórias</h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">Cada foto, uma página da nossa história. Momentos que guardo com carinho no coração.</p>
+                <div id="carousel-wrapper" class="max-w-5xl mx-auto relative">
+                    <div id="carousel-container">
+                        <!-- Images dynamically inserted here -->
                     </div>
-                    <div id="carousel-overlay" class="absolute inset-0 bg-black opacity-0 pointer-events-none"></div>
-                    <button id="prev-btn" class="absolute top-1/2 left-4 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white z-10 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    <div id="carousel-blink-overlay"></div>
+                    <!-- Navigation Buttons -->
+                    <button id="prev-btn" class="absolute top-1/2 left-0 md:-left-16 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white z-20 transition-all duration-300 hover:scale-110">
+                        <i data-feather="chevron-left"></i>
                     </button>
-                    <button id="next-btn" class="absolute top-1/2 right-4 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white z-10 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    <button id="next-btn" class="absolute top-1/2 right-0 md:-right-16 -translate-y-1/2 bg-white/10 hover:bg-white/30 p-3 rounded-full text-white z-20 transition-all duration-300 hover:scale-110">
+                        <i data-feather="chevron-right"></i>
                     </button>
                 </div>
             </section>
             
-            <!-- Friendship Counter -->
-            <section class="scroll-reveal">
-                 <div class="text-center bg-slate-900/50 p-8 rounded-lg max-w-4xl mx-auto border border-slate-700">
-                     <h3 class="font-handwriting text-3xl text-amber-300 mb-2 text-glow">Tempo da Nossa Amizade</h3>
-                     <p class="text-slate-400 mb-6">Desde o nosso reencontro no meu aniversário...</p>
-                     <div class="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-slate-100">
-                        <div class="text-center"><span id="days" class="block text-4xl md:text-6xl font-bold">0</span><span class="text-sm text-slate-400">Dias</span></div>
-                        <div class="text-center"><span id="hours" class="block text-4xl md:text-6xl font-bold">0</span><span class="text-sm text-slate-400">Horas</span></div>
-                        <div class="text-center"><span id="minutes" class="block text-4xl md:text-6xl font-bold">0</span><span class="text-sm text-slate-400">Minutos</span></div>
-                        <div class="text-center"><span id="seconds" class="block text-4xl md:text-6xl font-bold">0</span><span class="text-sm text-slate-400">Segundos</span></div>
-                     </div>
-                 </div>
-            </section>
-            
-            <!-- Songs Section -->
+            <!-- Spotify Songs Section -->
             <section id="songs" class="scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-amber-300 mb-12 text-glow">Nossa Trilha Sonora</h2>
+                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Algumas de suas canções favoritas</h2>
+                 <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">A trilha sonora que embala os seus dias. Espero que goste da seleção!</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0j2sui6BmkPy974W3VG3RZ?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0Xs01h2rSnY0iAgRdgMskv?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6OpFBCGJ282fCG15Ewb5Ob?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                     <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/5wBzp92NzcwfeunyqeRODo?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7jOmWXi3Ut4Ualn7ubBUMV?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                </div>
-            </section>
-
-            <!-- Special Audio Section -->
-            <section class="text-center scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-amber-300 mb-8 text-glow">Uma Mensagem Para Você</h2>
-                <div id="custom-audio-player-container" class="max-w-md mx-auto px-4">
-                    <div id="custom-audio-player" class="w-full bg-slate-800/50 border border-slate-700 p-3 rounded-full flex items-center space-x-3">
-                        <button id="play-pause-btn" class="flex-shrink-0 w-10 h-10 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center transition-transform hover:scale-110">
-                            <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play ml-1"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-                            <svg id="pause-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pause hidden"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></svg>
-                        </button>
-                        <div class="flex-grow bg-slate-600 h-1.5 rounded-full relative cursor-pointer group" id="seek-bar-container">
-                            <div id="seek-bar-progress" class="bg-amber-400 h-1.5 rounded-full"></div>
-                            <div id="seek-bar-thumb" class="w-4 h-4 bg-white rounded-full absolute top-1/2 -translate-y-1/2 -translate-x-1/2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" style="left: 0%;"></div>
-                        </div>
-                        <div id="time-display" class="text-xs text-slate-300 w-24 text-center">0:00 / 0:00</div>
-                    </div>
-                    <audio id="special-audio-element" class="hidden">
-                        <source src="https://raw.githubusercontent.com/igrm55/meu_audio/main/Rua%20e%20Mussurunga%20II%20St%20J%203.m4a" type="audio/mp4">
-                        Seu navegador não suporta o elemento de áudio.
-                    </audio>
-                </div>
-            </section>
-
-            <!-- 12 Thanks Section -->
-            <section class="scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-amber-300 mb-12 text-glow">12 Vezes, Obrigado!</h2>
-                <p class="text-center text-slate-400 mb-12">Toque em cada diamante para revelar uma mensagem.</p>
-                <div id="thanks-grid" class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-y-16 gap-x-8 max-w-4xl mx-auto">
-                    <!-- Thanks cards will be inserted here by JS -->
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7jOmWXi3Ut4Ualn7ubBUMV?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" class="md:col-span-2 lg:col-span-1 lg:col-start-2"></iframe>
                 </div>
             </section>
             
+            <!-- Special Audio Message Section -->
+            <section class="text-center scroll-reveal">
+                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Uma Mensagem Especial Para Você</h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">Aperte o play para ouvir um recado que gravei. É algo que queria te dizer há tempos.</p>
+                <div class="audio-player-container">
+                    <div id="custom-audio-player" class="w-full flex items-center space-x-4">
+                        <button id="special-audio-play-pause" class="flex-shrink-0 w-14 h-14 bg-amber-400 text-slate-900 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-amber-300 shadow-lg shadow-amber-500/20">
+                           <i data-feather="play" class="ml-1 w-7 h-7"></i>
+                        </button>
+                        <div class="w-full flex items-center space-x-3">
+                            <span id="special-audio-time-current" class="text-xs text-slate-400 w-12 text-center">0:00</span>
+                            <div class="seek-bar-container relative group flex-1" id="special-audio-seek-bar-container">
+                                <div id="special-audio-seek-bar-progress" class="seek-bar-progress"></div>
+                                <div id="special-audio-seek-bar-thumb" class="seek-bar-thumb"></div>
+                            </div>
+                            <span id="special-audio-time-duration" class="text-xs text-slate-400 w-12 text-center">0:00</span>
+                        </div>
+                    </div>
+                    <audio id="special-audio-element" class="hidden" src="https://raw.githubusercontent.com/igrm55/ayslan_audio/main/Ayslan_audio.mp3"></audio>
+                </div>
+            </section>
+
             <!-- Memory Game Section -->
             <section class="scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-amber-300 mb-12 text-glow">Jogo da Memória da Amizade</h2>
-                <div class="max-w-3xl mx-auto bg-slate-900/70 p-6 rounded-lg shadow-2xl border border-slate-700">
-                    <div id="game-board" class="grid grid-cols-4 gap-4">
-                        <!-- Memory cards will be inserted here by JS -->
+                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-glow mb-4">Jogo da Memória da Amizade</h2>
+                <p class="text-slate-400 mb-8 max-w-2xl mx-auto text-center">Vamos testar sua memória! Encontre os pares e reviva alguns dos nossos melhores momentos.</p>
+                <div class="max-w-3xl mx-auto bg-slate-900/70 p-4 md:p-6 rounded-lg shadow-2xl border border-slate-700">
+                    <div id="game-board" class="grid grid-cols-4 gap-2 md:gap-4">
+                        <!-- Memory cards inserted by JS -->
                     </div>
                     <div class="text-center mt-6">
-                        <button id="restart-game-btn" class="bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2 px-6 rounded-lg transition-colors">Reiniciar Jogo</button>
+                        <button id="restart-game-btn" class="glowing-btn text-base py-2 px-6">Reiniciar Jogo</button>
                     </div>
                 </div>
             </section>
             
-            <!-- Secret Message Section -->
-            <section class="scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-center text-amber-300 mb-12 text-glow">Uma Lembrança Secreta</h2>
-                <div id="password-gate" class="max-w-md mx-auto text-center bg-slate-800/50 p-8 rounded-lg border border-slate-700">
-                    <p class="mb-4">Qual o nome do lugar da nossa primeira viagem juntos?</p>
-                    <input type="password" id="secret-password" class="bg-slate-700 text-white rounded p-2 w-full text-center" placeholder="Digite a senha...">
-                    <button id="unlock-btn" class="mt-4 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2 px-6 rounded-lg transition-colors">Desvendar</button>
-                    <p id="password-error" class="text-red-400 mt-2 hidden">Senha incorreta. Tente novamente!</p>
-                </div>
-                <div id="secret-content" class="hidden max-w-2xl mx-auto text-center bg-amber-400/10 backdrop-blur-sm p-8 rounded-lg mt-8 border border-amber-300/50">
-                    <h3 class="font-handwriting text-3xl text-amber-200 mb-4 text-glow">Bem-vindo de volta à Ilha Morena!</h3>
-                    <p class="text-lg text-slate-200">Lembra daquele lugar? Onde as risadas eram mais altas, as preocupações menores e cada momento parecia um pequeno pedaço da eternidade. Aquela viagem não foi só um passeio, foi a prova de que nossa amizade transforma qualquer lugar no melhor lugar do mundo. Que a gente possa colecionar muitas outras 'Ilhas Morenas' pela vida.</p>
+            <!-- Friendship Proposal Section -->
+            <section class="scroll-reveal text-center py-20 my-16 bg-slate-900/50 rounded-lg border border-amber-500/10 shadow-2xl shadow-amber-500/5">
+                <h2 class="font-handwriting text-4xl md:text-5xl text-glow mb-8">E para o futuro...</h2>
+                <p class="text-2xl mb-12 text-white max-w-2xl mx-auto">Você aceita continuar sendo o meu melhor amigo para sempre?</p>
+                <div class="space-x-8">
+                    <button class="glowing-btn proposal-btn text-xl">Sim!</button>
+                    <button class="glowing-btn proposal-btn text-xl">Claro!</button>
                 </div>
             </section>
 
-            <!-- Friendship Proposal Section -->
-            <section class="text-center py-20 bg-slate-900/50 rounded-lg scroll-reveal">
-                <h2 class="font-handwriting text-4xl md:text-5xl text-amber-300 mb-8 text-glow">E para o futuro...</h2>
-                <p class="text-2xl mb-12 text-white">Você aceita continuar sendo o meu melhor amigo para sempre?</p>
-                <div class="space-x-8">
-                    <button class="proposal-btn font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-110 shadow-lg shadow-amber-500/10">Sim!</button>
-                    <button class="proposal-btn font-bold py-4 px-10 rounded-lg text-xl transition-transform transform hover:scale-110 shadow-lg shadow-amber-500/10">Claro!</button>
-                </div>
-            </section>
         </main>
         
-        <footer class="text-center py-8 text-slate-500 text-sm">
+        <footer class="text-center py-8 text-slate-500 text-sm border-t border-slate-800">
             <p>Feito com ❤️ por Ayslan.</p>
         </footer>
     </div>
     
-    <!-- Finale Animation Canvas & Overlay -->
-    <canvas id="finale-canvas"></canvas>
-    <div id="finale-overlay">
-        <svg id="parchment-svg" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid meet" class="card-texture rounded-lg shadow-2xl border-2 border-amber-800/50">
-             <text x="200" y="60" class="font-handwriting" font-size="36" text-anchor="middle" fill="#586e75">Contrato de Amizade</text>
-             <text x="200" y="120" font-size="16" text-anchor="middle" fill="#586e75">Já vivemos tantas coisas incríveis até aqui,</text>
-             <text x="200" y="145" font-size="16" text-anchor="middle" fill="#586e75">e certamente é apenas o começo.</text>
-             <text x="200" y="180" font-size="16" text-anchor="middle" fill="#586e75">Nossa parceria é para a vida toda,</text>
-             <text x="200" y="205" font-size="16" text-anchor="middle" fill="#586e75">um pacto de lealdade, risadas e</text>
-             <text x="200" y="230" font-size="16" text-anchor="middle" fill="#586e75">apoio incondicional.</text>
-             
-             <text x="200" y="280" font-size="16" text-anchor="middle" font-weight="bold" fill="#586e75">Que venham mais capítulos desta história.</text>
-             
-             <text x="200" y="350" font-size="18" text-anchor="middle" font-weight="bold" fill="#c0392b">Contrato Aceito e Renovado</text>
-             
-             <text x="200" y="450" font-size="14" text-anchor="middle" fill="#586e75">Assinado por:</text>
-             <text x="200" y="490" class="font-handwriting" font-size="40" text-anchor="middle" fill="#005a9c">Jeferson</text>
-        </svg>
-    </div>
-
-    <!-- Modals -->
-    <div id="thanks-modal" class="modal fixed inset-0 bg-black/70 z-50 items-center justify-center">
-        <div class="bg-slate-800 p-8 rounded-lg shadow-2xl max-w-md w-11/12 relative text-center border-2 border-amber-400">
-            <button id="close-modal-btn" class="absolute -top-4 -right-4 bg-amber-400 text-slate-900 rounded-full h-10 w-10 text-xl font-bold flex items-center justify-center">&times;</button>
-            <p id="modal-text" class="text-2xl font-handwriting text-amber-200"></p>
+    <!-- General Purpose Modal -->
+    <div id="notification-modal" class="modal-overlay">
+        <div class="modal-content">
+            <p id="modal-text" class="text-2xl font-handwriting text-amber-200 mb-6"></p>
+            <button id="close-modal-btn" class="glowing-btn py-2 px-6">Fechar</button>
         </div>
     </div>
     
+    <!-- Finale Animation Canvas & Overlay -->
+    <canvas id="finale-canvas"></canvas>
+    <div id="finale-overlay" class="modal-overlay p-4">
+        <div class="relative w-full h-full flex items-center justify-center">
+            <svg id="parchment-svg" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid meet" class="card-texture rounded-lg shadow-2xl border-2 border-amber-800/50">
+                <style>
+                    #parchment-svg .title { font-family: 'Playfair Display', serif; font-size: 36px; text-anchor: middle; fill: #2a2a2a; }
+                    #parchment-svg .body-text { font-family: 'Inter', sans-serif; font-size: 16px; text-anchor: middle; fill: #586e75; }
+                    #parchment-svg .bold-text { font-weight: bold; }
+                    #parchment-svg .signature-text { font-family: 'Great Vibes', cursive; font-size: 50px; text-anchor: middle; fill: #005a9c; }
+                    #parchment-svg .signed-by { font-size: 14px; text-anchor: middle; fill: #586e75; }
+                    #parchment-svg .accepted-text { font-size: 18px; text-anchor: middle; font-weight: bold; fill: #c0392b;}
+                </style>
+                <text x="200" y="60" class="title">Contrato de Amizade</text>
+                <text x="200" y="120" class="body-text">Já vivemos tantas coisas incríveis até aqui,</text>
+                <text x="200" y="145" class="body-text">e certamente é apenas o começo.</text>
+                <text x="200" y="180" class="body-text">Nossa parceria é para a vida toda,</text>
+                <text x="200" y="205" class="body-text">um pacto de lealdade, risadas e</text>
+                <text x="200" y="230" class="body-text">apoio incondicional.</text>
+                <text x="200" y="280" class="body-text bold-text">Que venham mais capítulos desta história.</text>
+                <text x="200" y="350" class="accepted-text">Contrato Aceito e Renovado</text>
+                <text x="200" y="450" class="signed-by">Assinado por:</text>
+                <text x="200" y="500" class="signature-text">Jeferson</text>
+            </svg>
+             <button id="close-finale-btn"><i data-feather="x"></i></button>
+        </div>
+    </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
 
-            const imageSources = [ 'https://i.postimg.cc/SQfPD9M0/b9e72434-91f4-48a8-bfe9-880fc110c4b1.jpg', 'https://i.postimg.cc/5NPRMMgn/36755635-30f5-4ad4-b7b9-ce6b93e93990.jpg', 'https://i.postimg.cc/WbpHK4Gd/24462ad1-ac80-4795-b49e-9798390589d1.jpg', 'https://i.postimg.cc/dVLSsSSv/3b4d2e77-3815-4fdd-b21b-04ebd3a97bec.jpg', 'https://i.postimg.cc/85BZX8sd/2418fd8d-d268-4bc4-854e-7003361a44b8.jpg', 'https://i.postimg.cc/MGBPRfSF/58ffa755-5a11-489b-a498-e10e5a819b85.jpg', 'https://i.postimg.cc/SspZGQQN/9218cd6a-1df4-46d3-8be8-9dd85b3a7ce5.jpg', 'https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg', 'https://i.postimg.cc/66cHdNkt/c5a43a50-32f9-4024-a03a-254f518ca858.jpg', 'https://i.postimg.cc/brm38Qxs/6219e37f-a6d8-489e-b3c4-e6f83fded76e.jpg', 'https://i.postimg.cc/9FfLbn2T/26958c37-f10d-4b1e-a001-f2d90c035734.jpg', 'https://i.postimg.cc/GhSq5x3f/9d2d6e91-e2a3-4f84-b6e9-91fd7f7fa2ea.jpg', 'https://i.postimg.cc/0yTZ85wd/180047be-01e2-4542-8dec-44978622ea1d.jpg' ];
+            const imageSources = ['https://i.postimg.cc/SQfPD9M0/b9e72434-91f4-48a8-bfe9-880fc110c4b1.jpg', 'https://i.postimg.cc/5NPRMMgn/36755635-30f5-4ad4-b7b9-ce6b93e93990.jpg', 'https://i.postimg.cc/WbpHK4Gd/24462ad1-ac80-4795-b49e-9798390589d1.jpg', 'https://i.postimg.cc/dVLSsSSv/3b4d2e77-3815-4fdd-b21b-04ebd3a97bec.jpg', 'https://i.postimg.cc/85BZX8sd/2418fd8d-d268-4bc4-854e-7003361a44b8.jpg', 'https://i.postimg.cc/MGBPRfSF/58ffa755-5a11-489b-a498-e10e5a819b85.jpg', 'https://i.postimg.cc/SspZGQQN/9218cd6a-1df4-46d3-8be8-9dd85b3a7ce5.jpg', 'https://i.postimg.cc/90mJvxq6/0a9b9fff-42b0-4d31-80d0-1cd3f07f4eba.jpg', 'https://i.postimg.cc/66cHdNkt/c5a43a50-32f9-4024-a03a-254f518ca858.jpg', 'https://i.postimg.cc/brm38Qxs/6219e37f-a6d8-489e-b3c4-e6f83fded76e.jpg', 'https://i.postimg.cc/9FfLbn2T/26958c37-f10d-4b1e-a001-f2d90c035734.jpg', 'https://i.postimg.cc/GhSq5x3f/9d2d6e91-e2a3-4f84-b6e9-91fd7f7fa2ea.jpg', 'https://i.postimg.cc/0yTZ85wd/180047be-01e2-4542-8dec-44978622ea1d.jpg'];
+
+            // --- Background Starfield ---
+            const bgCanvas = document.getElementById('background-canvas');
+            const bgCtx = bgCanvas.getContext('2d');
+            let stars = [];
+            
+            function setupStars() {
+                bgCanvas.width = window.innerWidth;
+                bgCanvas.height = window.innerHeight;
+                stars = [];
+                const starCount = window.innerWidth > 768 ? 200 : 100;
+                for (let i = 0; i < starCount; i++) {
+                    stars.push({
+                        x: Math.random() * bgCanvas.width,
+                        y: Math.random() * bgCanvas.height,
+                        radius: Math.random() * 1.5,
+                        alpha: Math.random() * 0.5 + 0.5,
+                        velocity: { x: (Math.random() - 0.5) * 0.1, y: (Math.random() - 0.5) * 0.1 }
+                    });
+                }
+            }
+
+            function animateStars() {
+                bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+                bgCtx.fillStyle = 'rgba(253, 230, 138, 0.8)';
+                stars.forEach(star => {
+                    star.x += star.velocity.x;
+                    star.y += star.velocity.y;
+
+                    if (star.x < 0 || star.x > bgCanvas.width) star.velocity.x *= -1;
+                    if (star.y < 0 || star.y > bgCanvas.height) star.velocity.y *= -1;
+                    
+                    bgCtx.globalAlpha = star.alpha;
+                    bgCtx.beginPath();
+                    bgCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    bgCtx.fill();
+                });
+                requestAnimationFrame(animateStars);
+            }
+            
+            window.addEventListener('resize', setupStars);
+
+
+            // --- General Modal Logic ---
+            const notificationModal = document.getElementById('notification-modal');
+            const modalText = document.getElementById('modal-text');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            function showModal(message) { modalText.innerHTML = message; notificationModal.classList.add('active'); }
+            closeModalBtn.addEventListener('click', () => notificationModal.classList.remove('active'));
+            notificationModal.addEventListener('click', (e) => { if (e.target === notificationModal) notificationModal.classList.remove('active'); });
 
             // --- Entry & Scroll Logic ---
-            const openSurpriseBtn = document.getElementById('open-surprise-btn');
-            openSurpriseBtn.addEventListener('click', () => {
+            document.getElementById('open-surprise-btn').addEventListener('click', () => {
                 document.getElementById('entry-screen').style.opacity = '0';
                 document.getElementById('entry-screen').style.pointerEvents = 'none';
                 document.getElementById('main-content').style.opacity = '1';
+                document.getElementById('background-canvas').style.opacity = '1';
+                setupStars();
+                animateStars();
                 setTimeout(() => handleScrollReveal(), 500);
             });
 
             const scrollElements = document.querySelectorAll('.scroll-reveal');
-            const handleScrollReveal = () => {
-                scrollElements.forEach(el => {
-                    if (el.getBoundingClientRect().top < window.innerHeight - 150) {
-                        el.classList.add('visible');
-                    }
-                });
-            };
+            const handleScrollReveal = () => scrollElements.forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible'); });
             window.addEventListener('scroll', handleScrollReveal);
-            
-            // --- Friendship Counter ---
-            const friendshipStartDate = new Date('2024-09-03T00:00:00');
-            function updateCounter() {
-                const now = new Date();
-                let diff = now - friendshipStartDate;
-                if (diff < 0) diff = 0; // Show 0 if date is in future
-                
-                const days = Math.floor(diff / 86400000);
-                const hours = Math.floor((diff % 86400000) / 3600000);
-                const minutes = Math.floor((diff % 3600000) / 60000);
-                const seconds = Math.floor((diff % 60000) / 1000);
 
-                document.getElementById('days').textContent = days;
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            // --- Generic Audio Player Setup ---
+            function setupAudioPlayer(config) {
+                const audio = document.getElementById(config.audioId);
+                const playPauseBtn = document.getElementById(config.playPauseId);
+                const seekBarContainer = document.getElementById(config.seekBarContainerId);
+                const progress = document.getElementById(config.progressId);
+                const thumb = document.getElementById(config.thumbId);
+                const currentTimeDisplay = document.getElementById(config.currentTimeId);
+                const durationDisplay = document.getElementById(config.durationId);
+                function formatTime(seconds) { if (isNaN(seconds)) return "0:00"; const minutes = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${minutes}:${String(secs).padStart(2, '0')}`; }
+                playPauseBtn.addEventListener('click', () => { if (audio.paused) { audio.play(); playPauseBtn.innerHTML = '<i data-feather="pause" class="w-7 h-7"></i>'; } else { audio.pause(); playPauseBtn.innerHTML = '<i data-feather="play" class="ml-1 w-7 h-7"></i>'; } feather.replace(); });
+                audio.addEventListener('loadedmetadata', () => { if (durationDisplay) durationDisplay.textContent = formatTime(audio.duration); });
+                audio.addEventListener('timeupdate', () => { const percentage = (audio.currentTime / audio.duration) * 100; progress.style.width = `${percentage}%`; thumb.style.left = `${percentage}%`; if (currentTimeDisplay) currentTimeDisplay.textContent = formatTime(audio.currentTime); });
+                audio.addEventListener('ended', () => { playPauseBtn.innerHTML = '<i data-feather="play" class="ml-1 w-7 h-7"></i>'; feather.replace(); });
+                seekBarContainer.addEventListener('click', (e) => { const rect = seekBarContainer.getBoundingClientRect(); const clickX = e.clientX - rect.left; const percentage = (clickX / rect.width); audio.currentTime = audio.duration * percentage; });
             }
-            setInterval(updateCounter, 1000);
+            setupAudioPlayer({ audioId: 'authors-song-audio', playPauseId: 'authors-song-play-pause', seekBarContainerId: 'authors-song-seek-bar-container', progressId: 'authors-song-seek-bar-progress', thumbId: 'authors-song-seek-bar-thumb', currentTimeId: 'authors-song-time-current', durationId: 'authors-song-time-duration' });
+            setupAudioPlayer({ audioId: 'special-audio-element', playPauseId: 'special-audio-play-pause', seekBarContainerId: 'special-audio-seek-bar-container', progressId: 'special-audio-seek-bar-progress', thumbId: 'special-audio-seek-bar-thumb', currentTimeId: 'special-audio-time-current', durationId: 'special-audio-time-duration' });
 
-            // --- Photo Carousel ---
+            // --- Photo Carousel (Adaptive Shape) ---
+            const carouselWrapper = document.getElementById('carousel-wrapper');
             const carouselContainer = document.getElementById('carousel-container');
-            const carouselOverlay = document.getElementById('carousel-overlay');
+            const blinkOverlay = document.getElementById('carousel-blink-overlay');
             let currentImageIndex = 0;
-            imageSources.forEach((src, index) => {
-                const item = document.createElement('div');
-                item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
-                item.innerHTML = `<img src="${src}" onerror="this.src='https://placehold.co/800x600/020617/e2e8f0?text=Imagem+N%C3%A3o+Encontrada'">`;
-                carouselContainer.appendChild(item);
-            });
-            const carouselItems = carouselContainer.children;
+            let carouselItems = [];
+            let preloadedImages = [];
+
+            function preloadImagesAndBuildCarousel() {
+                let loadedCount = 0;
+                imageSources.forEach((src, index) => {
+                    const img = new Image();
+                    img.src = src;
+                    img.className = 'carousel-item-img';
+                    preloadedImages[index] = img;
+                    img.onload = () => {
+                        loadedCount++;
+                        if (loadedCount === imageSources.length) {
+                             buildCarouselDOM();
+                        }
+                    };
+                });
+            }
+            
+            function buildCarouselDOM() {
+                carouselContainer.innerHTML = '';
+                preloadedImages.forEach((img, index) => {
+                    const item = document.createElement('div');
+                    item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+                    item.appendChild(img);
+                    carouselContainer.appendChild(item);
+                });
+                carouselItems = Array.from(carouselContainer.children);
+                setContainerSize(0);
+            }
+            
+            function setContainerSize(index) {
+                const image = preloadedImages[index];
+                if (image && image.naturalWidth > 0) {
+                    const wrapperWidth = carouselWrapper.offsetWidth;
+                    if (wrapperWidth === 0) { 
+                        setTimeout(() => setContainerSize(index), 50);
+                        return;
+                    }
+                    const aspectRatio = image.naturalHeight / image.naturalWidth;
+                    let targetHeight = wrapperWidth * aspectRatio;
+                    const maxHeight = window.innerHeight * 0.8;
+                    if (targetHeight > maxHeight) {
+                        targetHeight = maxHeight;
+                    }
+                    carouselContainer.style.height = `${targetHeight}px`;
+                } else {
+                    setTimeout(() => setContainerSize(index), 100);
+                }
+            }
 
             function changeImage(direction) {
-                carouselOverlay.style.opacity = '1';
+                const nextIndex = (currentImageIndex + direction + imageSources.length) % imageSources.length;
+                blinkOverlay.style.opacity = '1';
                 setTimeout(() => {
-                    carouselItems[currentImageIndex].classList.remove('active');
-                    currentImageIndex = (currentImageIndex + direction + imageSources.length) % imageSources.length;
-                    carouselItems[currentImageIndex].classList.add('active');
-                    setTimeout(() => { carouselOverlay.style.opacity = '0'; }, 100);
-                }, 200);
+                    setContainerSize(nextIndex);
+                    setTimeout(() => {
+                        carouselItems[currentImageIndex].classList.remove('active');
+                        carouselItems[nextIndex].classList.add('active');
+                        currentImageIndex = nextIndex;
+                        setTimeout(() => {
+                            blinkOverlay.style.opacity = '0';
+                        }, 50); 
+                    }, 200); 
+                }, 150); 
             }
+            
             document.getElementById('next-btn').addEventListener('click', () => changeImage(1));
             document.getElementById('prev-btn').addEventListener('click', () => changeImage(-1));
+            window.addEventListener('resize', () => setContainerSize(currentImageIndex));
+            preloadImagesAndBuildCarousel();
 
-            // --- Custom Audio Player ---
-            const audio = document.getElementById('special-audio-element');
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            const playIcon = document.getElementById('play-icon');
-            const pauseIcon = document.getElementById('pause-icon');
-            const seekBarContainer = document.getElementById('seek-bar-container');
-            const progress = document.getElementById('seek-bar-progress');
-            const thumb = document.getElementById('seek-bar-thumb');
-            const timeDisplay = document.getElementById('time-display');
-
-            function formatTime(seconds) {
-                const minutes = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${minutes}:${String(secs).padStart(2, '0')}`;
-            }
-
-            playPauseBtn.addEventListener('click', () => {
-                if (audio.paused) {
-                    audio.play();
-                    playIcon.classList.add('hidden');
-                    pauseIcon.classList.remove('hidden');
-                } else {
-                    audio.pause();
-                    playIcon.classList.remove('hidden');
-                    pauseIcon.classList.add('hidden');
-                }
-            });
-
-            audio.addEventListener('loadedmetadata', () => {
-                timeDisplay.textContent = `0:00 / ${formatTime(audio.duration)}`;
-            });
-
-            audio.addEventListener('timeupdate', () => {
-                const percentage = (audio.currentTime / audio.duration) * 100;
-                progress.style.width = `${percentage}%`;
-                thumb.style.left = `${percentage}%`;
-                timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
-            });
-
-            audio.addEventListener('ended', () => {
-                 playIcon.classList.remove('hidden');
-                 pauseIcon.classList.add('hidden');
-            });
-
-            seekBarContainer.addEventListener('click', (e) => {
-                const rect = seekBarContainer.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const percentage = (clickX / rect.width);
-                audio.currentTime = audio.duration * percentage;
-            });
-
-
-            // --- 12 Thanks Section ---
-            const thanksMessages = [ "Obrigado por ser meu melhor amigo", "Obrigado por estar sempre ao meu lado", "Obrigado por fazer parte da minha vida", "Obrigado pelas vezes em que enxugou minhas lágrimas", "Obrigado pelas vezes em que se pausou por mim", "Obrigado por se importar comigo", "Obrigado por sempre me incentivar", "Obrigado por sempre me colocar pra cima", "Obrigado por cada conselho", "Obrigado por confiar em mim", "Obrigado por nunca desistir da nossa amizade", "Obrigado por ser esse presente de Deus em minha vida" ];
-            const thanksGrid = document.getElementById('thanks-grid');
-            const thanksModal = document.getElementById('thanks-modal');
-            const modalText = document.getElementById('modal-text');
-            const closeModalBtn = document.getElementById('close-modal-btn');
-            
-            thanksMessages.forEach((msg, index) => {
-                const wrapper = document.createElement('div');
-                wrapper.className = "flex justify-center items-center";
-                wrapper.innerHTML = `<div class="diamond w-20 h-20 bg-amber-400/20 border-2 border-amber-400 rounded-md cursor-pointer flex items-center justify-center" data-message="${msg}"><div class="diamond-inner text-amber-300 text-3xl font-bold">${index + 1}</div></div>`;
-                wrapper.querySelector('.diamond').addEventListener('click', (e) => {
-                    modalText.textContent = e.currentTarget.dataset.message;
-                    thanksModal.style.display = 'flex';
-                });
-                thanksGrid.appendChild(wrapper);
-            });
-            closeModalBtn.addEventListener('click', () => thanksModal.style.display = 'none');
-            window.addEventListener('click', (e) => { if (e.target == thanksModal) thanksModal.style.display = 'none'; });
 
             // --- Memory Game ---
             const gameBoard = document.getElementById('game-board');
             const restartBtn = document.getElementById('restart-game-btn');
-            const gameImages = imageSources.slice(0, 6);
+            const gameImages = imageSources.slice(0, 8);
             let cardData = [...gameImages, ...gameImages];
             let flippedCards = [], lockBoard = false, matchedPairs = 0;
-
             function createBoard() {
-                gameBoard.innerHTML = '';
-                matchedPairs = 0;
-                cardData.sort(() => Math.random() - 0.5);
+                gameBoard.innerHTML = ''; matchedPairs = 0; cardData.sort(() => Math.random() - 0.5);
                 cardData.forEach(imageSrc => {
-                    const card = document.createElement('div');
-                    card.className = 'w-full aspect-square relative cursor-pointer [transform-style:preserve-3d] transition-transform duration-500';
-                    card.dataset.image = imageSrc;
-                    card.innerHTML = `
-                        <div class="absolute inset-0 rounded-lg flex items-center justify-center bg-blue-500 [backface-visibility:hidden]">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gift text-white"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-                        </div>
-                        <div class="absolute inset-0 rounded-lg [transform:rotateY(180deg)] [backface-visibility:hidden] bg-slate-800 flex items-center justify-center p-1">
-                            <img src="${imageSrc}" class="max-w-full max-h-full object-contain rounded-sm" onerror="this.src='https://placehold.co/100x100/1e293b/e2e8f0?text=:)';">
-                        </div>
-                    `;
+                    const card = document.createElement('div'); card.className = 'memory-card w-full aspect-square cursor-pointer'; card.dataset.image = imageSrc;
+                    card.innerHTML = `<div class="memory-card-inner"><div class="card-face card-front"><i data-feather="gift" class="w-10 h-10"></i></div><div class="card-face card-back"><img src="${imageSrc}" onerror="this.src='https://placehold.co/100x100/1a202c/e5e7eb?text=:)';"></div></div>`;
                     card.addEventListener('click', function() {
-                        if (lockBoard || this.classList.contains('is-flipped')) return;
-                        this.classList.add('is-flipped', '[transform:rotateY(180deg)]');
+                        if (lockBoard || this.classList.contains('is-flipped') || this.classList.contains('matched')) return;
+                        this.classList.add('is-flipped');
                         if (flippedCards.length === 0) { flippedCards.push(this); return; }
                         flippedCards.push(this); lockBoard = true;
                         if (flippedCards[0].dataset.image === flippedCards[1].dataset.image) {
-                            matchedPairs++;
-                            if (matchedPairs === gameImages.length) { setTimeout(() => { alert('Parabéns! Você encontrou todos os pares!'); createBoard(); }, 800); }
+                            matchedPairs++; flippedCards[0].classList.add('matched'); flippedCards[1].classList.add('matched');
                             [flippedCards, lockBoard] = [[], false];
-                        } else { setTimeout(() => { flippedCards.forEach(c => c.classList.remove('is-flipped', '[transform:rotateY(180deg)]'));[flippedCards, lockBoard] = [[], false]; }, 1200); }
+                            if (matchedPairs === gameImages.length) { setTimeout(() => { showModal('Parabéns! <br> Você encontrou todos os pares!'); setTimeout(createBoard, 1500); }, 800); }
+                        } else { setTimeout(() => { flippedCards.forEach(c => c.classList.remove('is-flipped')); [flippedCards, lockBoard] = [[], false]; }, 1200); }
                     });
                     gameBoard.appendChild(card);
                 });
+                feather.replace();
             }
             restartBtn.addEventListener('click', createBoard);
             createBoard();
-            
-            // --- Secret Message ---
-            document.getElementById('unlock-btn').addEventListener('click', () => {
-                const passwordInput = document.getElementById('secret-password');
-                if (passwordInput.value.toLowerCase().trim() === 'ilhamorena') {
-                    document.getElementById('password-gate').classList.add('hidden');
-                    document.getElementById('secret-content').classList.remove('hidden');
-                    document.getElementById('password-error').classList.add('hidden');
-                } else {
-                    document.getElementById('password-error').classList.remove('hidden');
-                    passwordInput.value = '';
-                }
-            });
 
             // --- Finale ---
             const proposalBtns = document.querySelectorAll('.proposal-btn');
             const finaleOverlay = document.getElementById('finale-overlay');
             const parchment = document.getElementById('parchment-svg');
+            const closeFinaleBtn = document.getElementById('close-finale-btn');
             const canvas = document.getElementById('finale-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
             let animationFrameId;
+            let stopSpawning = false;
 
             function handleFinale() {
                 finaleOverlay.classList.add('active');
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                createParticles();
-                animateParticles();
-                
                 setTimeout(() => {
-                    const svgHeight = parchment.getBBox().height;
-                    const svgWidth = parchment.getBBox().width;
-                    const aspectRatio = svgWidth / svgHeight;
-                    const containerHeight = finaleOverlay.clientHeight * 0.9;
-                    const containerWidth = containerHeight * aspectRatio;
+                    const svgHeight = 600, svgWidth = 400, aspectRatio = svgWidth / svgHeight;
+                    const containerHeight = finaleOverlay.clientHeight * 0.9, containerWidth = containerHeight * aspectRatio;
                     parchment.style.width = `${Math.min(containerWidth, finaleOverlay.clientWidth * 0.9)}px`;
                     parchment.style.height = `${containerHeight}px`;
-                }, 500);
+                }, 100);
             }
             
+            function closeFinale() {
+                parchment.style.height = '0';
+                parchment.style.width = '0';
+                closeFinaleBtn.style.opacity = '0';
+                
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                stopSpawning = false;
+                
+                const spawnInterval = setInterval(() => {
+                    if (stopSpawning) return;
+                    if (Math.random() > 0.3) createFirework();
+                    createConfetti();
+                }, 150);
+
+                animateParticles();
+
+                setTimeout(() => {
+                    stopSpawning = true;
+                    clearInterval(spawnInterval);
+                }, 5000);
+
+                setTimeout(() => {
+                    finaleOverlay.classList.remove('active');
+                     setTimeout(() => {
+                        cancelAnimationFrame(animationFrameId);
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        particles = [];
+                    }, 500);
+                }, 8000);
+            }
+
             proposalBtns.forEach(btn => btn.addEventListener('click', handleFinale));
-            finaleOverlay.addEventListener('click', () => { // Close by clicking overlay
-                 finaleOverlay.classList.remove('active');
-                 parchment.style.height = '0';
-                 cancelAnimationFrame(animationFrameId);
-                 particles = []; // Clear particles to stop animation
-            });
-            
-            function createParticles() {
-                particles = [];
-                for (let i = 0; i < 150; i++) {
-                    particles.push({
-                        x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2 + 1,
-                        speedX: Math.random() * 2 - 1, speedY: Math.random() * 2 - 1,
-                        color: `hsla(${Math.random() * 50 + 15}, 100%, 70%, ${Math.random() * 0.5 + 0.5})`
-                    });
-                }
+            closeFinaleBtn.addEventListener('click', closeFinale);
+
+            const confettiColors = ['#fde68a', '#fcd34d', '#fbbf24', '#f59e0b', '#d97706', '#ffffff'];
+            function Confetti() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                this.w = Math.random() * 10 + 5;
+                this.h = Math.random() * 20 + 10;
+                this.opacity = this.w / 15;
+                this.vx = Math.random() * 2 - 1;
+                this.vy = Math.random() * 3 + 1;
+                this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = Math.random() * 0.02 - 0.01;
             }
-            function animateParticles() {
-                if (particles.length === 0) {
-                    ctx.clearRect(0,0, canvas.width, canvas.height);
-                    return;
-                };
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < particles.length; i++) {
-                    let p = particles[i];
-                    p.x += p.speedX; p.y += p.speedY;
-                    if(p.x > canvas.width || p.x < 0) p.speedX *= -1;
-                    if(p.y > canvas.height || p.y < 0) p.speedY *= -1;
-                    ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+            Confetti.prototype.draw = function() {
+                ctx.save();
+                ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
+                ctx.restore();
+            };
+            Confetti.prototype.update = function(index) {
+                this.y += this.vy;
+                this.x += this.vx;
+                this.rotation += this.rotationSpeed;
+                if (this.y > canvas.height) {
+                    particles.splice(index, 1);
                 }
+            };
+            function createConfetti() {
+                let count = 15;
+                while(count--) particles.push(new Confetti());
+            }
+            
+            function createFirework() {
+                const startX = canvas.width / 2;
+                const startY = canvas.height;
+                const endX = Math.random() * canvas.width * 0.6 + canvas.width * 0.2;
+                const endY = Math.random() * canvas.height * 0.4 + canvas.height * 0.1;
+                particles.push(new Firework(startX, startY, endX, endY));
+            }
+
+            function Firework(sx, sy, tx, ty) {
+                this.x = sx; this.y = sy; this.sx = sx; this.sy = sy; this.tx = tx; this.ty = ty;
+                this.distanceToTarget = Math.sqrt(Math.pow(tx - sx, 2) + Math.pow(ty - sy, 2));
+                this.distanceTraveled = 0;
+                this.coordinates = []; this.coordinateCount = 3;
+                while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+                this.angle = Math.atan2(ty - sy, tx - sx);
+                this.speed = 4; this.acceleration = 1.05; this.brightness = Math.random() * 50 + 50;
+            }
+            Firework.prototype.update = function(index) {
+                this.coordinates.pop(); this.coordinates.unshift([this.x, this.y]);
+                this.speed *= this.acceleration;
+                const vx = Math.cos(this.angle) * this.speed; const vy = Math.sin(this.angle) * this.speed;
+                this.distanceTraveled = Math.sqrt(Math.pow(this.x - this.sx, 2) + Math.pow(this.y - this.sy, 2));
+                if (this.distanceTraveled >= this.distanceToTarget) {
+                    createSparks(this.tx, this.ty); particles.splice(index, 1);
+                } else { this.x += vx; this.y += vy; }
+            };
+            Firework.prototype.draw = function() {
+                ctx.beginPath(); ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                ctx.lineTo(this.x, this.y); ctx.strokeStyle = `hsl(45, 100%, ${this.brightness}%)`; ctx.stroke();
+            };
+
+            function Spark(x, y) {
+                this.x = x; this.y = y; this.coordinates = []; this.coordinateCount = 5;
+                while (this.coordinateCount--) { this.coordinates.push([this.x, this.y]); }
+                this.angle = Math.random() * (Math.PI * 2); this.speed = Math.random() * 10 + 1;
+                this.friction = 0.95; this.gravity = 1; this.hue = Math.random() * 60;
+                this.brightness = Math.random() * 50 + 50; this.alpha = 1; this.decay = Math.random() * 0.015 + 0.015;
+            }
+            Spark.prototype.update = function(index) {
+                this.coordinates.pop(); this.coordinates.unshift([this.x, this.y]);
+                this.speed *= this.friction; this.x += Math.cos(this.angle) * this.speed; this.y += Math.sin(this.angle) * this.speed + this.gravity;
+                this.alpha -= this.decay;
+                if (this.alpha <= this.decay) particles.splice(index, 1);
+            };
+            Spark.prototype.draw = function() {
+                ctx.beginPath(); ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                ctx.lineTo(this.x, this.y); ctx.strokeStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${this.alpha})`; ctx.stroke();
+            };
+            
+            function createSparks(x, y) {
+                let sparkCount = 100;
+                while (sparkCount--) particles.push(new Spark(x, y));
+            }
+            
+            function animateParticles() {
+                if(!finaleOverlay.classList.contains('active')) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    cancelAnimationFrame(animationFrameId);
+                    particles = [];
+                    return;
+                }
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.globalCompositeOperation = 'lighter';
+                let i = particles.length; while (i--) { particles[i].draw(); particles[i].update(i); }
                 animationFrameId = requestAnimationFrame(animateParticles);
             }
         });
